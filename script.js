@@ -15,7 +15,9 @@ function register() {
     user.signUp().then(function success(user) {
         window.location.replace("registered.html");
     }, function error(err) {
-        console.log(err);
+        errmsg = JSON.stringify(err);
+        errobj = JSON.parse(errmsg);
+        document.getElementById("regError").innerHTML = errobj.message;
     });
 }
 
@@ -25,7 +27,9 @@ function login() {
     Parse.User.logIn(username, password, { usePost: true }).then(function success(user) {
         window.location.replace("owner.html");
     }, function error(err) {
-        console.log(err);
+        errmsg = JSON.stringify(err);
+        errobj = JSON.parse(errmsg);
+        document.getElementById("loginError").innerHTML = errobj.message;
     });
 }
 

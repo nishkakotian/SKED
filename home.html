@@ -42,8 +42,6 @@
                 <img src="public/logo.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
                 S K E D
             </a>
-            <div id="signinlinks">
-            </div>
         </div>
     </nav>
 
@@ -115,9 +113,10 @@
                         <label for="pswd_reg">Password</label>
                         <input id="pswd_reg" class="form-control mb-2 mt-1" name="password_r" type="password" required>
 
+                        <div id="regError" class="my-2 text-danger"></div>
+
                         <button type="button" onclick="register()"
                             class="btn bg-secondary text-white my-2">Register</button>
-
                     </form>
                 </div>
             </div>
@@ -141,6 +140,8 @@
                         <label for="pswd_login">Password</label>
                         <input id="pswd_login" class="form-control mb-2 mt-1" name="password_l" type="password"
                             required>
+
+                        <div id="loginError" class="m-2 text-danger"></div>
 
                         <button type="button" onclick="login()" class="btn bg-secondary text-white my-2">Login</button>
                     </form>
