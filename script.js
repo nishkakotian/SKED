@@ -13,7 +13,7 @@ function register() {
     user.set("password", password);
 
     user.signUp().then(function success(user) {
-        window.location.replace("registered.html");
+        window.location.href = "registered.html";
     }, function error(err) {
         errmsg = JSON.stringify(err);
         errobj = JSON.parse(errmsg);
@@ -25,7 +25,7 @@ function login() {
     var username = document.getElementById("username_login").value;
     var password = document.getElementById("pswd_login").value;
     Parse.User.logIn(username, password, { usePost: true }).then(function success(user) {
-        window.location.replace("owner.html");
+        window.location.href = "owner.html";
     }, function error(err) {
         errmsg = JSON.stringify(err);
         errobj = JSON.parse(errmsg);
@@ -35,6 +35,6 @@ function login() {
 
 function logout() {
     Parse.User.logOut().then(function gotohome(user) {
-        window.location.replace("home.html");
+        window.location.href = "home.html";
     });
 };
