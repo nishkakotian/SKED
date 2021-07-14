@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="public/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Varela&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="public/style.css">
+    <title>Sked : Venue Booking System</title>
+    <style>
+        .navbar-brand>img {
+            position: relative;
+            animation-name: rotatebox;
+            animation-duration: 2s;
+        }
+
+        @keyframes rotatebox {
+            0% {
+                left: -50%;
+                transform: rotateX(180deg);
+            }
+
+            100% {
+                left: 0%;
+                transform: rotateX(0deg);
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-blue">
+        <div class="container">
+            <a class="navbar-brand" href="#" id="brand">
+                <img src="public/logo.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
+                S K E D
+            </a>
+            <div id="signinlinks">
+            </div>
+        </div>
+    </nav>
+
+    <div id="about">
+        <div class="container" id="mainhead">
+            <div class="row">
+                <div class="col-lg-7 col-md-12" id="info">
+                    <div class="jumbotron" id="leftcol">
+                        <h1 class="display-4">Manage bookings for all your venues easily!</h1>
+                        <button type="button" id="registerbtn" class="btn btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#registermodal">Register</button>
+                        <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#loginmodal"
+                            style="background: #d6fdea;">Login</button>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12" id="demovid">
+                    <!--yt video here-->
+                    <div id="ytvid">
+                        <!-- <iframe src="https://www.youtube.com/embed/sQwPwbGJwF8" title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="features">
+        <h2>F E A T U R E S</h2>
+        <div class="row">
+            <div class="col-sm">
+                <img src="public/feature1.png" width="180px" height="180px">
+                <h3>Quick Booking</h3>
+                Customers can view empty slots and apply for them without any hassle.
+            </div>
+            <div class="col-sm">
+                <img src="public/feature2.png" width="180px" height="180px">
+                <h3>View Statistics</h3>
+                Dashboard for visualization of room usage statistics.
+            </div>
+            <div class="col-sm">
+                <img src="public/feature3.png" width="180px" height="180px">
+                <h3>Multiple Venues</h3>
+                One place for listing all your venues and managing bookings.
+            </div>
+        </div>
+    </div>
+    <footer class="bg-blue">
+        <div class="container">
+            <p class="m-0 text-center text-white">&copy; SKED 2021</p>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="registermodal" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="registermodallabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title" id="registermodallabel">REGISTER</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerform" method="POST">
+                        <label for="username_reg">Username</label>
+                        <input id="username_reg" name="username_r" class="form-control mb-2 mt-1" type="text" required>
+
+                        <label for="pswd_reg">Password</label>
+                        <input id="pswd_reg" class="form-control mb-2 mt-1" name="password_r" type="password" required>
+
+                        <button type="button" onclick="register()"
+                            class="btn bg-secondary text-white my-2">Register</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loginmodal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="loginmodallabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title" id="loginmodallabel">LOGIN</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginform" method="POST">
+                        <label for="username_login">Username</label>
+                        <input id="username_login" name="username_l" class="form-control mb-2 mt-1" type="text"
+                            required>
+
+                        <label for="pswd_login">Password</label>
+                        <input id="pswd_login" class="form-control mb-2 mt-1" name="password_l" type="password"
+                            required>
+
+                        <button type="button" onclick="login()" class="btn bg-secondary text-white my-2">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
