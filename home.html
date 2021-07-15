@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Varela&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-a11y="true"></script>
     <link rel="stylesheet" href="public/style.css">
     <title>Sked : Venue Booking System</title>
     <style>
@@ -107,14 +108,20 @@
                 </div>
                 <div class="modal-body">
                     <form id="registerform" method="POST">
-                        <label for="username_reg">Username</label>
-                        <input id="username_reg" name="username_r" class="form-control mb-2 mt-1" type="text" required>
+                        <label for="username_reg" class="form-label">Username</label>
+                        <input id="username_reg" name="username_r" class="form-control mb-2" type="text" required>
 
-                        <label for="pswd_reg">Password</label>
-                        <input id="pswd_reg" class="form-control mb-2 mt-1" name="password_r" type="password" required>
+                        <label for="pswd_reg" class="form-label">Password</label><br />
+                        <div class="input-group">
+                            <input id="pswd_reg" class="form-control" name="password_r" type="password" required>
+
+                            <button type="button" class="input-group-text bg-white"
+                                onclick="visibilityToggle('pswd_reg','eyeicon')">
+                                <i id="eyeicon" class="fa fa-eye-slash" style="color: #a8a4a4;" aria-hidden="true"></i>
+                            </button>
+                        </div>
 
                         <div id="regError" class="my-2 text-danger"></div>
-
                         <button type="button" onclick="register()"
                             class="btn bg-secondary text-white my-2">Register</button>
                     </form>
@@ -133,16 +140,20 @@
                 </div>
                 <div class="modal-body">
                     <form id="loginform" method="POST">
-                        <label for="username_login">Username</label>
-                        <input id="username_login" name="username_l" class="form-control mb-2 mt-1" type="text"
-                            required>
+                        <label for="username_login" class="form-label">Username</label>
+                        <input id="username_login" name="username_l" class="form-control mb-2" type="text" required>
 
-                        <label for="pswd_login">Password</label>
-                        <input id="pswd_login" class="form-control mb-2 mt-1" name="password_l" type="password"
-                            required>
+                        <label for="pswd_login" class="form-label">Password</label>
+
+                        <div class="input-group">
+                            <input id="pswd_login" class="form-control" name="password_l" type="password" required>
+                            <button type="button" class="input-group-text bg-white"
+                                onclick="visibilityToggle('pswd_login','eyeicon2')">
+                                <i id="eyeicon2" class="fa fa-eye-slash" style="color: #a8a4a4;" aria-hidden="true"></i>
+                            </button>
+                        </div>
 
                         <div id="loginError" class="m-2 text-danger"></div>
-
                         <button type="button" onclick="login()" class="btn bg-secondary text-white my-2">Login</button>
                     </form>
                 </div>
