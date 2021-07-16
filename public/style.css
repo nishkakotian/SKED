@@ -22,7 +22,17 @@ footer{
     margin-left: 20px;
 }
 .bg-blue{
-    background: #24305E;
+    background-color: #24305E;
+}
+.bg-white{
+    background-color: #fff;
+}
+/* purple : #965ccd */
+.text-purple{
+    color: #4650aa;
+}
+.bg-purple{
+    background-color: #3c4595;
 }
 .navlink{
     float: right;
@@ -87,6 +97,9 @@ footer{
     font-weight: 400;
     /* Create span inside h3 then use for the half background color effect-
     background-image: linear-gradient(180deg,#fff,#fff,#fff,#37F3FF); */
+}
+#pswd_reg,#pswd_login{
+    border-right: 0px solid;
 }
 
 @media (max-width:992px){

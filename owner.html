@@ -14,12 +14,13 @@
     <link rel="stylesheet" href="public/style.css">
     <title>Sked</title>
     <link rel="stylesheet" href="public/dashboard.css">
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-a11y="true"></script>
 </head>
 
-<body>
+<body onload="getOwnerData();">
     <!-- Add sign out link -->
     <header class="navbar navbar-dark sticky-top bg-blue flex-md-nowrap py-1 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#" id="ownername"></a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -38,20 +39,20 @@
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                <span data-feather="home"></span>
+                            <a class="nav-link active m-2" aria-current="page" href="#">
+                                <i class="fas fa-home me-2"></i>
                                 Venues
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="users"></span>
+                            <a class="nav-link m-2" href="#">
+                                <i class="fas fa-users me-2"></i>
                                 Requests
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="bar-chart-2"></span>
+                            <a class="nav-link m-2" href="#">
+                                <i class="fas fa-chart-bar me-2"></i>
                                 Statistics
                             </a>
                         </li>
@@ -61,11 +62,6 @@
             </nav>
         </div>
     </div>
-    <div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
-        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
-        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

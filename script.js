@@ -21,16 +21,25 @@ function visibilityToggle(pswdId, iconId) {
     }
 }
 
-function register(btnid) {
+function register(el) {
     const username = document.getElementById("username_reg").value;
     const password = document.getElementById("pswd_reg").value;
+
+    var user_type;
+    if (el.id == "OwnerRegbtn") {
+        user_type = "Owner";
+    }
+    else {
+        user_type = "Customer";
+    }
 
     if (password.length >= 8) {
         const user = new Parse.User();
         user.set("username", username);
         user.set("password", password);
+        user.set("userType", user_type);
 
-        user.signUp().then(function success(user) {
+        user.signUp().then(function success() {
             window.location.href = "registered.html";
         }, function error(err) {
             document.getElementById("regError").innerHTML = err.message;
@@ -41,11 +50,22 @@ function register(btnid) {
     }
 }
 
+function getOwnerData() {
+    const user = Parse.User.current();
+    document.getElementById("ownername").innerHTML = user.attributes.username;
+}
+
 function login() {
     var username = document.getElementById("username_login").value;
     var password = document.getElementById("pswd_login").value;
     Parse.User.logIn(username, password, { usePost: true }).then(function success() {
-        window.location.href = "owner.html";
+        const user = Parse.User.current();
+        if (user.attributes.userType == "Owner") {
+            window.location.href = "owner.html";
+        }
+        else { /*user.attributes.userType == "Customer"*/
+            window.location.href = "customer.html";
+        }
     }, function error(err) {
         document.getElementById("loginError").innerHTML = err.message;
     });
