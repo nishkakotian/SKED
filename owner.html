@@ -37,29 +37,68 @@
         <div class="row">
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
+                    <ul class="nav flex-column" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active m-2" aria-current="page" href="#">
+                            <a type="button" class="nav-link active m-2" id="venues-tab" data-bs-toggle="pill"
+                                data-bs-target="#listedVenues" aria-selected="true" role="tab"
+                                aria-controls="listedVenues">
                                 <i class="fas fa-home me-2"></i>
                                 Venues
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link m-2" href="#">
+                            <a type="button" class="nav-link m-2" id="requests-tab" data-bs-toggle="pill"
+                                data-bs-target="#bookingRequests" aria-selected="false" role="tab"
+                                aria-controls="bookingRequests">
                                 <i class="fas fa-users me-2"></i>
                                 Requests
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link m-2" href="#">
+                            <a type="button" class="nav-link m-2" id="stats-tab" data-bs-toggle="pill"
+                                data-bs-target="#usageStats" aria-controls="usageStats" aria-selected="false"
+                                role="tab">
                                 <i class="fas fa-chart-bar me-2"></i>
                                 Statistics
                             </a>
                         </li>
                     </ul>
+                </div>
 
+                <div class="m-3" style="position: absolute; bottom: 0; background-color: white;">
+                    <!-- <div class="m-2" class="p-4">
+                        Add a venue
+                    </div> -->
+                    <button type="button" class=" m-2 btn btn-lg btn-outline-dark">Add a venue</button>
                 </div>
             </nav>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="tab-content">
+                    <div id="listedVenues" class="tab-pane active" role="tabpanel" aria-labelledby="venues-tab">
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                Your listed venues will show up here after you add them.
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="bookingRequests" class="tab-pane" role="tabpanel" aria-labelledby="requests-tab">
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                You don't have any booking requests.
+                            </div>
+                        </div>
+                    </div>
+                    <div id="usageStats" class="tab-pane" role="tabpanel" aria-labelledby="stats-tab">
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                Your will find room usage statistics here.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

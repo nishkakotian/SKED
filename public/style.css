@@ -101,6 +101,10 @@ footer{
 #pswd_reg,#pswd_login{
     border-right: 0px solid;
 }
+/* .no-border{
+    border: 0px solid;
+    background: none;
+} */
 
 @media (max-width:992px){
     #about{
