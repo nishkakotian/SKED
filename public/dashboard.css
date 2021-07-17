@@ -1,6 +1,3 @@
-body {
-  font-size: .875rem;
-}
 
 /*
  * Sidebar
@@ -46,7 +43,7 @@ body {
 }
 
 .sidebar .nav-link.active {
-  color: #007bff;
+  color: #039bec;
 }
 
 .sidebar .nav-link:hover .feather,
