@@ -16,9 +16,9 @@
     <link rel="stylesheet" href="public/dashboard.css">
     <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-a11y="true"></script>
     <style>
-        .tab-content .card {
+        .defaultMsg {
             margin: auto;
-            background-color: #effdff;
+            background-color: #effaff;
         }
     </style>
 </head>
@@ -78,26 +78,29 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="tab-content">
                     <div id="listedVenues" class="tab-pane active" role="tabpanel" aria-labelledby="venues-tab">
-                        <div class="card mt-4 w-75">
-                            <div class=" card-body">
+                        <!--Div to display for new owners.No venues added yet-->
+                        <div class="card mt-4 w-75 defaultMsg d-none" id="novenues">
+                            <div class="card-body">
                                 <h5 class="mb-3" style="color: #fa5757;">Welcome to SKED!</h5>
                                 Your listed venues will show up here after you add them.<br>
-                                <button type="button" class="btn mt-3" style="background:#51d6d6;">Add a
+                                <button type="button" class="btn mt-3" style="background:#7cebeb;">Add a
                                     venue</button>
                             </div>
-                            <!-- Other colours #fde9d6 #effff7-->
                         </div>
-
+                        <!--Div to display for owners with atleast 1 venue added-->
+                        <div id="displayVenues" class="row">
+                            <h5 class="mt-4 mb-3">Your Venues</h5>
+                        </div>
                     </div>
                     <div id="bookingRequests" class="tab-pane" role="tabpanel" aria-labelledby="requests-tab">
-                        <div class="card mt-4 w-75">
+                        <div class="card mt-4 w-75 defaultMsg">
                             <div class="card-body">
                                 You don't have any booking requests.
                             </div>
                         </div>
                     </div>
                     <div id="usageStats" class="tab-pane" role="tabpanel" aria-labelledby="stats-tab">
-                        <div class="card mt-4 w-75">
+                        <div class="card mt-4 w-75 defaultMsg">
                             <div class="card-body">
                                 You will find room usage statistics here.
                             </div>

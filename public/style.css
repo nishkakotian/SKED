@@ -3,6 +3,13 @@
     padding: 0;
     box-sizing: border-box;
 }
+button:hover{
+    opacity: 0.9;
+}
+.btn:active,.btn:focus{
+    outline: none;
+    box-shadow: none;
+}
 body{
     padding-bottom: 70px;
     position: relative;
@@ -34,7 +41,8 @@ footer{
 .bg-light-blue{
     background-color: #3c4595;
 }
-.navlink{
+/* [TODO : Add link in navbar of home.html to home_customer.html and vice versa.]
+ .navlink{
     float: right;
     padding-right: 20px;
     text-decoration: none;
@@ -46,7 +54,7 @@ footer{
     color: #b7ceff;
     text-decoration: underline;
     text-underline-position: under;
-}
+} */
 #about{
     background: #F76C6C;
     padding: 70px;
@@ -95,9 +103,9 @@ footer{
 }
 #features h3{
     font-weight: 400;
-    /* Create span inside h3 then use for the half background color effect-
-    background-image: linear-gradient(180deg,#fff,#fff,#fff,#37F3FF); */
 }
+/* Create span inside h3 then use for the half background color effect-
+    background-image: linear-gradient(180deg,#fff,#fff,#fff,#37F3FF); */
 #pswd_reg,#pswd_login{
     border-right: 0px solid;
 }
@@ -105,10 +113,6 @@ footer{
     border: 0px solid;
     background: none;
 } */
-.tab-pane > div{
-    margin: auto;
-}
-
 @media (max-width:992px){
     #about{
         padding: 30px 10px 30px 10px;

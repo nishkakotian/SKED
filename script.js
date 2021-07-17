@@ -53,6 +53,34 @@ function register(el) {
 function getOwnerData() {
     const user = Parse.User.current();
     document.getElementById("ownername").innerHTML = user.attributes.username;
+
+    const Venues = Parse.Object.extend("Venues");
+    const query = new Parse.Query(Venues);
+    query.equalTo("ownerName", user.attributes.username);
+    query.find().then(function findVenues(results) {
+        if (results.length == 0) {
+            document.getElementById("novenues").classList.remove("d-none");
+        } else {
+            const displayArea = document.getElementById("displayVenues");
+            const colours = ["#8a068f", "#06148f", "#c70a62", "#0a9956", "#e78659", "#87b40d", "#0791b4", "#8609ce", "#4c7e80", "#c2427e", "#838080"];
+            var i = 0; //counter for colour (i<11)
+            results.forEach((venue, index) => {
+                if (i == 11) { i = 0; }
+                console.log(venue);
+                var venuediv = document.createElement("div");
+                venuediv.className = "venue col-sm-12 col-md-6 col-lg-3 mb-4";
+                var photo = venue.get("image1").url();
+                //[TODO : Here span always says occupied, check condition & add appropriate tags]
+                venuediv.innerHTML =
+                    `<div class='card' style ='border-bottom: 4px solid ${colours[i]};'><img class='card-img-top' height='230px' src='${photo}'><div class='card-body'><h5 class='card-title'>${venue.attributes.venueName}</h5><span class='tag tag-occupied'><small>occupied</small></span></div></div>`;
+                displayArea.appendChild(venuediv);
+                i += 1;
+
+            });
+        }
+    }, function error(err) {
+        alert('Error : ', err.message);
+    });
 }
 
 function login() {
