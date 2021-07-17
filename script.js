@@ -104,3 +104,7 @@ function logout() {
         window.location.href = "home.html";
     });
 }
+
+function emptyError(errorContainerId) {
+    document.getElementById(errorContainerId).innerHTML = "";
+}
