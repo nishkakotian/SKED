@@ -89,13 +89,14 @@
                             <div class="card-body">
                                 <h5 class="mb-3" style="color: #fa5757;">Welcome to SKED!</h5>
                                 Your listed venues will show up here after you add them.<br>
-                                <button type="button" class="btn mt-3" style="background:#7cebeb;">Add a
+                                <button type="button" class="btn mt-3" style="background:#7cebeb;"
+                                    data-bs-toggle="modal" data-bs-target="#addVenueModal">Add a
                                     venue</button>
                             </div>
                         </div>
                         <!--Div to display for owners with atleast 1 venue added-->
                         <div id="displayVenues" class="row">
-                            <h5 class="mt-4 mb-3">Your Venues</h5>
+                            <h5 class="mt-4 mb-3 d-none" id="yourVenuesHeading">Your Venues</h5>
                         </div>
                     </div>
                     <div id="bookingRequests" class="tab-pane" role="tabpanel" aria-labelledby="requests-tab">
@@ -128,26 +129,28 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="POST">
                             <div class="mb-3">
                                 <label for="nameOfVenue" class="form-label">Name of the venue</label>
-                                <input type="text" id="nameOfVenue" name="venueName" class="form-control" required>
+                                <input type="text" id="nameOfVenue" name="venueName" class="form-control">
                             </div>
+
                             <div class="mb-3">
                                 <label for="addr" class="form-label">Address</label>
-                                <input type="text" id="addr" name="address" class="form-control" required>
+                                <input type="text" id="addr" name="address" class="form-control">
                             </div>
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="cityName" class="form-label">City</label>
-                                    <input type="text" id="cityName" name="city" class="form-control mb-3" required>
+                                    <input type="text" id="cityName" name="city" class="form-control mb-3">
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="days" class="form-label">Days Available</label>
                                 <input type="text" list="daysoptions" id="days" name="daysAvailable"
-                                    class="form-control" required>
+                                    class="form-control">
                                 <datalist id="daysoptions">
                                     <option value="All">All</option>
                                     <option value="Monday-Saturday">Monday-Saturday</option>
@@ -155,21 +158,21 @@
                                 </datalist>
                             </div>
 
-                            <!--In js convert these to AM/PM format and put it in a single timing string-->
+                            <!-- Concatenate topen & tclose in js and put it in a single timing string-->
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label" for="topen">Opens</label>
-                                    <input type="time" id="topen" class="form-control" name="timingStart" required>
+                                    <input type="time" id="topen" class="form-control" name="timeStart">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="tclose">Closes</label>
-                                    <input type="time" id="tclose" class="form-control" name="timeEnd" required>
+                                    <input type="time" id="tclose" class="form-control" name="timeEnd">
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="image1" class="form-label">Venue Image - 1</label>
-                                <input class="form-control" type="file" id="image1" name="image1" required>
+                                <input class="form-control" type="file" id="image1" name="image1">
                             </div>
 
                             <div class="mb-3">
@@ -180,11 +183,10 @@
                             <div class="mb-3">
                                 <label for="desc" class="form-label">Description</label>
                                 <textarea id="desc" rows="5" name="description" class="form-control"
-                                    placeholder="Details about your venue and other facilities available"
-                                    required></textarea>
+                                    placeholder="Details about your venue and other facilities available"></textarea>
                             </div>
 
-                            <button type="submit" onsubmit="createVenue();" id="venueSubmitBtn"
+                            <button type="button" onclick="createVenue()" id="venueSubmitBtn"
                                 class="btn text-light mb-3">Submit</button>
                         </form>
                     </div>
