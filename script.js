@@ -72,7 +72,13 @@ function getOwnerData() {
                 var photo = venue.get("image1").url();
                 //[TODO : Here span always says occupied, check condition & add appropriate tags]
                 venuediv.innerHTML =
-                    `<div class='card' style ='border-bottom: 4px solid ${colours[i]};'><img class='card-img-top' height='230px' src='${photo}'><div class='card-body'><h5 class='card-title'>${venue.attributes.venueName}</h5><span class='tag tag-occupied'><small>occupied</small></span></div></div>`;
+                    `<div class='card' style ='border-bottom: 4px solid ${colours[i]};'>
+                        <img class='card-img-top' height='230px' src='${photo}'>
+                        <div class='card-body'>
+                            <h5 class='card-title'>${venue.attributes.venueName}</h5>
+                            <span class='tag tag-occupied'><small>occupied</small></span>
+                        </div>
+                    </div>`;
                 displayArea.appendChild(venuediv);
                 i += 1;
 
@@ -107,4 +113,8 @@ function logout() {
 
 function emptyError(errorContainerId) {
     document.getElementById(errorContainerId).innerHTML = "";
+}
+
+function createVenue() {
+    alert('Venue created');
 }

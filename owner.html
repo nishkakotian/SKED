@@ -20,6 +20,11 @@
             margin: auto;
             background-color: #effaff;
         }
+
+        #venueSubmitBtn {
+            background-color: #039bec;
+            width: 100%
+        }
     </style>
 </head>
 
@@ -72,7 +77,8 @@
                 </div>
 
                 <div class="m-3" style="position: absolute; bottom: 0;">
-                    <button type="button" class=" m-2 btn btn-lg btn-outline-dark">Add a venue</button>
+                    <button type="button" class=" m-2 btn btn-lg btn-outline-dark" data-bs-toggle="modal"
+                        data-bs-target="#addVenueModal">Add a venue</button>
                 </div>
             </nav>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -108,14 +114,90 @@
                     </div>
                 </div>
             </main>
-
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
-    <script src="script.js"></script>
+
+    <!--Add a venue modal-->
+    <div class="modal-dialog modal-xl">
+        <div class="modal fade" id="addVenueModal" data-bs-backdrop="static" tabindex="-1"
+            aria-labelledby="addVenueLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addVenueLabel">Venue Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="nameOfVenue" class="form-label">Name of the venue</label>
+                                <input type="text" id="nameOfVenue" name="venueName" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="addr" class="form-label">Address</label>
+                                <input type="text" id="addr" name="address" class="form-control" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="cityName" class="form-label">City</label>
+                                    <input type="text" id="cityName" name="city" class="form-control mb-3" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="days" class="form-label">Days Available</label>
+                                <input type="text" list="daysoptions" id="days" name="daysAvailable"
+                                    class="form-control" required>
+                                <datalist id="daysoptions">
+                                    <option value="All">All</option>
+                                    <option value="Monday-Saturday">Monday-Saturday</option>
+                                    <option value="Monday-Friday">Monday-Friday</option>
+                                </datalist>
+                            </div>
+
+                            <!--In js convert these to AM/PM format and put it in a single timing string-->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="topen">Opens</label>
+                                    <input type="time" id="topen" class="form-control" name="timingStart" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="tclose">Closes</label>
+                                    <input type="time" id="tclose" class="form-control" name="timeEnd" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="image1" class="form-label">Venue Image - 1</label>
+                                <input class="form-control" type="file" id="image1" name="image1" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="image2" class="form-label">Venue Image - 2</label>
+                                <input class="form-control" type="file" id="image2" name="image2">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="desc" class="form-label">Description</label>
+                                <textarea id="desc" rows="5" name="description" class="form-control"
+                                    placeholder="Details about your venue and other facilities available"
+                                    required></textarea>
+                            </div>
+
+                            <button type="submit" onsubmit="createVenue();" id="venueSubmitBtn"
+                                class="btn text-light mb-3">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+        <script src="script.js"></script>
 </body>
 
 

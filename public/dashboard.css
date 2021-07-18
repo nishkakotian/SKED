@@ -42,7 +42,7 @@
   color: #727272;
 }
 
-.sidebar .nav-link.active {
+.sidebar .nav-link.active, #addVenueLabel {
   color: #039bec;
 }
 
