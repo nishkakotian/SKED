@@ -33,7 +33,13 @@ function register(el) {
         user_type = "Customer";
     }
 
-    if (password.length >= 8) {
+    if (username.length == 0) {
+        document.getElementById("regError").innerHTML = "Username cannot be empty";
+    }
+    else if (password.length < 8 || password.length > 16) {
+        document.getElementById("regError").innerHTML = "Password must be between 8-16 characters long";
+    }
+    else {
         const user = new Parse.User();
         user.set("username", username);
         user.set("password", password);
@@ -44,9 +50,6 @@ function register(el) {
         }, function error(err) {
             document.getElementById("regError").innerHTML = err.message;
         });
-    }
-    else {
-        document.getElementById("regError").innerHTML = "Password must be atleast 8 characters long";
     }
 }
 
@@ -92,17 +95,26 @@ function getOwnerData() {
 function login() {
     var username = document.getElementById("username_login").value;
     var password = document.getElementById("pswd_login").value;
-    Parse.User.logIn(username, password, { usePost: true }).then(function success() {
-        const user = Parse.User.current();
-        if (user.attributes.userType == "Owner") {
-            window.location.href = "owner.html";
-        }
-        else { /*user.attributes.userType == "Customer"*/
-            window.location.href = "customer.html";
-        }
-    }, function error(err) {
-        document.getElementById("loginError").innerHTML = err.message;
-    });
+
+    if (username.length == 0) {
+        document.getElementById("loginError").innerHTML = "Please enter the username";
+    }
+    else if (password.length < 8 || password.length > 16) {
+        document.getElementById("loginError").innerHTML = "Passwords are between 8-16 characters long.";
+    }
+    else {
+        Parse.User.logIn(username, password, { usePost: true }).then(function success() {
+            const user = Parse.User.current();
+            if (user.attributes.userType == "Owner") {
+                window.location.href = "owner.html";
+            }
+            else { /*user.attributes.userType == "Customer"*/
+                window.location.href = "customer.html";
+            }
+        }, function error(err) {
+            document.getElementById("loginError").innerHTML = err.message;
+        });
+    }
 }
 
 function logout() {

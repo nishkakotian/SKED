@@ -110,11 +110,11 @@
                 <div class="modal-body">
                     <form id="registerform">
                         <label for="username_reg" class="form-label">Username</label>
-                        <input id="username_reg" name="username_r" class="form-control mb-2" type="text" required>
+                        <input id="username_reg" name="username_r" class="form-control mb-2" type="text">
 
                         <label for="pswd_reg" class="form-label">Password</label><br />
                         <div class="input-group">
-                            <input id="pswd_reg" class="form-control" name="password_r" type="password" required>
+                            <input id="pswd_reg" class="form-control" name="password_r" type="password">
 
                             <button type="button" class="input-group-text bg-white"
                                 onclick="visibilityToggle('pswd_reg','eyeicon')">
@@ -122,7 +122,7 @@
                             </button>
                         </div>
 
-                        <div id="regError" class="my-2 text-danger"></div>
+                        <div id="regError" class="mt-2 text-danger"></div>
                         <button type="button" id="OwnerRegbtn" onclick="register(this)"
                             class="btn bg-secondary text-white my-2">Register</button>
                     </form>
@@ -143,19 +143,19 @@
                 <div class="modal-body">
                     <form id="loginform" method="POST">
                         <label for="username_login" class="form-label">Username</label>
-                        <input id="username_login" name="username_l" class="form-control mb-2" type="text" required>
+                        <input id="username_login" name="username_l" class="form-control mb-2" type="text">
 
                         <label for="pswd_login" class="form-label">Password</label>
 
                         <div class="input-group">
-                            <input id="pswd_login" class="form-control" name="password_l" type="password" required>
+                            <input id="pswd_login" class="form-control" name="password_l" type="password">
                             <button type="button" class="input-group-text bg-white"
-                                onclick="visibilityToggle('pswd_login','eyeicon2')">
+                                onclick="visibilityToggle('pswd_login','eyeicon2')" id="testeye">
                                 <i id="eyeicon2" class="fa fa-eye-slash" style="color: #a8a4a4;" aria-hidden="true"></i>
                             </button>
                         </div>
 
-                        <div id="loginError" class="my-2 text-danger"></div>
+                        <div id="loginError" class="mt-2 text-danger"></div>
                         <button type="button" id="OwnerLoginbtn" onclick="login()"
                             class="btn bg-secondary text-white my-2">Login</button>
                     </form>
