@@ -172,12 +172,12 @@
 
                             <div class="mb-3">
                                 <label for="image1" class="form-label">Venue Image - 1</label>
-                                <input class="form-control" type="file" id="image1" name="image1">
+                                <input class="form-control" type="file" accept="image/*" id="image1" name="image1">
                             </div>
 
                             <div class="mb-3">
                                 <label for="image2" class="form-label">Venue Image - 2</label>
-                                <input class="form-control" type="file" id="image2" name="image2">
+                                <input class="form-control" type="file" accept="image/*" id="image2" name="image2">
                             </div>
 
                             <div class="mb-3">
@@ -186,6 +186,7 @@
                                     placeholder="Details about your venue and other facilities available"></textarea>
                             </div>
 
+                            <div id="addVenueError" class="mb-3 text-danger"></div>
                             <button type="button" onclick="createVenue()" id="venueSubmitBtn"
                                 class="btn text-light mb-3">Submit</button>
                         </form>

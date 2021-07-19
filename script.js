@@ -132,6 +132,7 @@ function getOwnerData() {
 }
 
 function createVenue() {
+    document.getElementById("addVenueError").innerHTML = "";
     const venuename = document.getElementById("nameOfVenue").value;
     const address = document.getElementById("addr").value;
     const city = document.getElementById("cityName").value;
@@ -140,35 +141,48 @@ function createVenue() {
     const tclose = document.getElementById("tclose").value;
     const timing = topen + "-" + tclose; //[TODO: Convert to AM-PM format]
 
-    const image1 = document.getElementById("image1").files[0];
-    const image2 = document.getElementById("image2").files[0];
-
-    const parseFile1 = new Parse.File("image1.jpeg", image1);
-    const parseFile2 = new Parse.File("image2.jpeg", image2);
+    const image1 = document.getElementById("image1");
+    const image2 = document.getElementById("image2");
 
     const desc = document.getElementById("desc").value;
-    const owner = Parse.User.current();
 
-    const Venue = Parse.Object.extend("Venues");
-    const venue = new Venue();
+    //Client side validation to check that all fields are entered
+    if (!venuename || !address || !city || !daysAvailable || !topen || !tclose || image1.files.length == 0 || image2.files.length == 0 || !desc) {
+        document.getElementById("addVenueError").innerHTML = "Please fill all the fields.";
+    }
+    else {
+        const parseFileImg1 = new Parse.File("img1.jpeg", image1.files[0]);
+        const parseFileImg2 = new Parse.File("img2.jpeg", image2.files[0]);
 
-    venue.set("ownerName", owner.get("username"));
-    venue.set("venueName", venuename);
-    venue.set("address", address);
-    venue.set("city", city);
-    venue.set("daysAvailable", daysAvailable);
-    venue.set("timings", timing);
-    venue.set("image1", parseFile1);
-    venue.set("image2", parseFile2);
-    venue.set("description", desc);
+        const owner = Parse.User.current();
 
-    venue.save().then(function success(venue) {
-        const displayArea = document.getElementById("displayVenues");
-        displayVenue(displayArea, venue);
-        i += 1;
-        if (i == 11) { i = 0; }
-    }, function error(err) {
-        alert("Error adding venue : " + err);
-    });
+        const Venue = Parse.Object.extend("Venues");
+        const venue = new Venue();
+
+        var acl = new Parse.ACL();
+        acl.setPublicReadAccess(true);
+        acl.setWriteAccess(owner.id, true);
+
+        venue.setACL(acl);
+        venue.set("ownerName", owner.get("username"));
+        venue.set("venueName", venuename);
+        venue.set("address", address);
+        venue.set("city", city);
+        venue.set("daysAvailable", daysAvailable);
+        venue.set("timings", timing);
+        venue.set("image1", parseFileImg1);
+        venue.set("image2", parseFileImg2);
+        venue.set("description", desc);
+
+        venue.save().then(function success(venue) {
+            const displayArea = document.getElementById("displayVenues");
+            displayVenue(displayArea, venue);
+            i += 1;
+            if (i == 11) { i = 0; }
+            alert("Venue added successfully!");
+        }, function error(err) {
+            alert("Error adding venue : " + err);
+        });
+    }
 
 };
