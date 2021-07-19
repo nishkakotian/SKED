@@ -35,9 +35,10 @@
         }
     </style>
 </head>
+<!--onload="showVenues()"-->
 
-<body>
-    <nav class="navbar navbar-dark bg-blue">
+<body onload="showVenues()">
+    <nav class=" navbar navbar-dark bg-blue">
         <div class="container">
             <a class="navbar-brand" href="#" id="brand">
                 <img src="public/logo.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
@@ -87,6 +88,16 @@
             </div>
         </div>
     </div>
+
+    <div id="venues">
+        <div class="container" id="viewOnlyVenues">
+            <h2 style="font-weight: 300;" class="mb-4">V E N U E S</h2>
+            <div id="showVenuesHomepg" class="row">
+
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-blue">
         <div class="container">
             <p class="m-0 text-center text-white">&copy; SKED 2021</p>

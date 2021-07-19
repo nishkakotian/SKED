@@ -186,3 +186,20 @@ function createVenue() {
     }
 
 };
+
+function showVenues() {
+    const Venues = Parse.Object.extend("Venues");
+    const query = new Parse.Query(Venues);
+    query.limit(25);
+    query.find().then(function success(results) {
+        results.forEach((venue, index) => {
+            const displayArea = document.getElementById("showVenuesHomepg");
+            if (i == 11) { i = 0 };
+            displayVenue(displayArea, venue);
+            i += 1;
+        });
+
+    }, function error(err) {
+        console.log("Error : ", err);
+    });
+}

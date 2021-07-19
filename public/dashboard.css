@@ -93,27 +93,3 @@
 .tab-pane > div{
   margin: auto;
 }
-
-.venue > div{
-  border-radius: 5px;
-}
-
-.tag{
-  border-radius: 30px; 
-  display: inline-block;
-  padding: 4px 9px 4px 9px;
-  margin-top: 1px;
-  margin-bottom: 1px;
-}
-
-.tag-occupied{
-  background-color: #fff3d3; 
-}
-
-.tag-free{
-  background-color: #cffae9;
-}
-
-.tag-requests{
-  background-color: #ffe1d3;
-}
