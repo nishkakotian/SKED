@@ -91,13 +91,44 @@ function emptyError(errorContainerId) {
     document.getElementById(errorContainerId).innerHTML = "";
 }
 
+function insertDetails() {
+    let params = new URLSearchParams(location.search);
+    let venueId = params.get('id');
+    const Venue = Parse.Object.extend("Venues");
+    const query = new Parse.Query(Venue);
+    query.get(venueId).then((venue) => {
+        // The object was retrieved successfully.
+        document.getElementById("brand").innerHTML = venue.get("venueName");
+
+        document.getElementById("img1container").innerHTML = `<img class="d-block w-100" src="${venue.get("image1").url()}" alt="First Image" style="max-height:720px">`
+
+        document.getElementById("img2container").innerHTML = `<img class="d-block w-100" src="${venue.get("image2").url()}" alt="Second Image" style="max-height:720px">`
+
+        document.getElementById("desc").innerHTML = venue.get("description");
+        document.getElementById("city").innerHTML = venue.get("city");
+        document.getElementById("address").innerHTML = venue.get("address");
+        document.getElementById("days").innerHTML = venue.get("daysAvailable");
+        document.getElementById("timing").innerHTML = venue.get("timings");
+
+        document.getElementById("dataHolder").classList.add("bg-dark");
+    }, (error) => {
+        // The object was not retrieved successfully.
+        alert("Error occured: ", error.message);
+    });
+}
+
+function venueDetails(el) {
+    window.location.href = "venue.html?id=" + el.id;
+}
+
 function displayVenue(displayArea, venue) {
     var venuediv = document.createElement("div");
     venuediv.className = "venue col-sm-12 col-md-6 col-lg-3 mb-4";
     var photo = venue.get("image1").url();
+    var objId = venue.id;
     //[TODO : Here span always says free, check condition & add appropriate tags]
     venuediv.innerHTML =
-        `<div class='card' style ='border-bottom: 4px solid ${colours[i]};'>
+        `<div class='card' id='${objId}' onclick='venueDetails(this)' style ='border-bottom: 4px solid ${colours[i]};'>
             <img class='card-img-top' height='230px' src='${photo}'>
             <div class='card-body'>
                 <h5 class='card-title'>${venue.attributes.venueName}</h5>
