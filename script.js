@@ -162,6 +162,29 @@ function getOwnerData() {
     });
 }
 
+function filterVenues() {
+    document.getElementById("filterNoResults").innerHTML = "";
+    var loc = document.getElementById("locationfilter").value;
+    const Venues = Parse.Object.extend("Venues");
+    const query = new Parse.Query(Venues);
+    query.equalTo("city", loc);
+    query.find().then(function findVenues(results) {
+        if (results.length == 0) {
+            document.getElementById("filterNoResults").innerHTML = "No venues found in " + loc;
+        } else {
+            const displayArea = document.getElementById("showVenuesHomepg");
+            displayArea.textContent = ""; //Remove all venues so as to display only the filtered venues
+            results.forEach((venue, index) => {
+                if (i == 11) { i = 0; }
+                displayVenue(displayArea, venue);
+                i += 1;
+            });
+        }
+    }, function error(err) {
+        alert('Error : ', err.message);
+    });
+}
+
 function createVenue() {
     document.getElementById("addVenueError").innerHTML = "";
     const venuename = document.getElementById("nameOfVenue").value;
