@@ -139,13 +139,13 @@ background-color: #ffe1d3;
 
 .calendar {
     box-shadow: 0 3px 8px rgb(180, 179, 179);
-    margin: 20px 0 20px 0;
+    margin: 20px 0 5px 0;
 }
 
 .month {
     width: 100%;
     height: 70px;
-    background-color: #14b8a2;
+    background-color: #59c8fb;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -188,6 +188,18 @@ background-color: #ffe1d3;
 #next,
 #prev {
     background-color: inherit;
+}
+
+#bookVenue{
+    border: 2px solid #02ceb9;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+    
+}
+
+#bookVenueBtn{
+    background-color: #00a090;
 }
 
 @media (max-width:992px){

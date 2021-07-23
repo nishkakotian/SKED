@@ -17,8 +17,8 @@
 </head>
 
 <body onload="insertDetails(); getDates();">
-    <nav class=" navbar navbar-dark bg-blue">
-        <div class="container">
+    <nav class=" navbar navbar-dark" style="background-image: linear-gradient(90deg,#212066,#03acfa,#ddf867)">
+        <div class=" container">
             <a class="navbar-brand" href="#" id="brand" style="text-align: center;">
             </a>
         </div>
@@ -44,7 +44,7 @@
 
 
         <div class="my-4 text-light" id="dataHolder"
-            style="padding: 20px; border-radius: 10px;background-color: darkslategray;">
+            style="padding: 20px; border-radius: 10px;background-color: hsl(228, 45%, 25%);">
             <p id="desc"></p>
             <div>
                 <i class="fas fa-map-marker-alt me-2"></i><span id="city"></span>
@@ -83,6 +83,45 @@
 
             </div>
         </div>
+        <small class="mb-4"><i class="fas fa-info me-2"></i>Please click on any date to check booked slots.</small>
+    </div>
+
+    <div id="bookVenue" class="container mb-4">
+        <form>
+            <h4 style="color: #00a090;">Book this venue</h4>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="custName" class="form-label">Full name</label>
+                    <input type="text" id="custName" name="customerName" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label for="email" class="form-label">Email Id</label>
+                    <input type="email" id="email" name="EmailId" class="form-control">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="date" class="form-label">Date to book</label>
+                    <input type="date" id="date" name="date" class="form-control">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="starttime">Time Slot - Start Time</label>
+                    <input type="time" id="starttime" class="form-control" name="start">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="endtime">Time Slot - End Time</label>
+                    <input type="time" id="endtime" class="form-control" name="end">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="purpose">Purpose</label>
+                <textarea id="purpose" rows="3" name="custPurpose" class="form-control"
+                    placeholder="write about the event you are conducting"></textarea>
+            </div>
+            <button type="button" class="btn text-light mb-2" id="bookVenueBtn">Book slot</button>
+        </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

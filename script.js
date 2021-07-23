@@ -92,6 +92,7 @@ function emptyError(errorContainerId) {
 }
 
 function insertDetails() {
+
     let params = new URLSearchParams(location.search);
     let venueId = params.get('id');
     const Venue = Parse.Object.extend("Venues");
@@ -110,9 +111,9 @@ function insertDetails() {
         document.getElementById("days").innerHTML = venue.get("daysAvailable");
         document.getElementById("timing").innerHTML = venue.get("timings");
 
-    }, (error) => {
+    }, (err) => {
         // The object was not retrieved successfully.
-        alert("Error occured: ", error.message);
+        alert("Error occured: ", err.message);
     });
 }
 
