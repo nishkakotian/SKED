@@ -110,7 +110,6 @@ function insertDetails() {
         document.getElementById("days").innerHTML = venue.get("daysAvailable");
         document.getElementById("timing").innerHTML = venue.get("timings");
 
-        document.getElementById("dataHolder").classList.add("bg-dark");
     }, (error) => {
         // The object was not retrieved successfully.
         alert("Error occured: ", error.message);
@@ -123,7 +122,7 @@ function venueDetails(el) {
 
 function displayVenue(displayArea, venue) {
     var venuediv = document.createElement("div");
-    venuediv.className = "venue col-sm-12 col-md-6 col-lg-3 mb-4";
+    venuediv.className = "venue col-sm-12 col-md-6 col-lg-3 mb-4 d-flex align-items-stretch";
     var photo = venue.get("image1").url();
     var objId = venue.id;
     //[TODO : Here span always says free, check condition & add appropriate tags]
@@ -256,4 +255,62 @@ function showVenues() {
     }, function error(err) {
         console.log("Error : ", err);
     });
+}
+
+function fillDates(mm, yy, today) {
+    var d = new Date(yy, mm, 1);
+    var firstday = d.getDay(); // weekday for the 1st day of that month 
+
+    const datesarea = document.getElementById("dayscontainer");
+
+    document.getElementById("monthandyear").innerHTML = months[mm] + " " + yy;
+
+    for (let j = 1; j <= firstday; j++) {
+        const emptyspan = document.createElement("span");
+        datesarea.appendChild(emptyspan);
+    }
+
+    var numofdays = new Date(yy, mm + 1, 0).getDate();//get number of days in that month
+
+    for (let j = 1; j <= numofdays; j++) {
+        var dd = new Date(yy, mm, j);
+        dd.setHours(23, 59, 59, 999);
+        if (dd.getTime() >= today.getTime()) {
+            dates = `<button class="future">${j}</button>`;
+        }
+        else {
+            dates = `<button disabled class="past">${j}</button>`;
+        }
+        datesarea.innerHTML += dates;
+    }
+}
+
+function getDates() {
+    var mm = today.getMonth();
+    var yy = today.getFullYear();
+
+    mmcounter = mm;
+    yycounter = yy;
+
+    fillDates(mmcounter, yycounter, today);
+}
+
+function nextDates() {
+    mmcounter += 1;
+    if (mmcounter == 12) {
+        yycounter += 1;
+        mmcounter = 0;
+    }
+    document.getElementById("dayscontainer").textContent = "";
+    fillDates(mmcounter, yycounter, today);
+}
+
+function prevDates() {
+    mmcounter -= 1;
+    if (mmcounter == -1) {
+        yycounter -= 1;
+        mmcounter = 11;
+    }
+    document.getElementById("dayscontainer").textContent = "";
+    fillDates(mmcounter, yycounter, today);
 }
