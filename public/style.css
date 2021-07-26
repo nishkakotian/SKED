@@ -202,6 +202,19 @@ background-color: #ffe1d3;
     background-color: #00a090;
 }
 
+.cardpink-bg{
+    background-color: #fbeaee;
+}
+.cardpink-btn{
+    background-color: #c44460;
+}
+.cardpurple-bg{
+    background-color: #fceefc;
+}
+.cardpurple-btn{
+    background-color: #7d3d8d;
+}
+
 @media (max-width:992px){
     #about{
         padding: 30px 10px 30px 10px;

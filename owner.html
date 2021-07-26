@@ -100,10 +100,13 @@
                         </div>
                     </div>
                     <div id="bookingRequests" class="tab-pane" role="tabpanel" aria-labelledby="requests-tab">
-                        <div class="card mt-4 w-75 defaultMsg">
+                        <div class="card mt-4 w-75 defaultMsg d-none" id="nobookings">
                             <div class="card-body">
                                 You don't have any booking requests.
                             </div>
+                        </div>
+                        <div id="displayBookings" class="row">
+                            <h5 class="mt-4 mb-3 d-none" id="bookingReq">Bookings</h5>
                         </div>
                     </div>
                     <div id="usageStats" class="tab-pane" role="tabpanel" aria-labelledby="stats-tab">
@@ -152,7 +155,7 @@
                                 <input type="text" list="daysoptions" id="days" name="daysAvailable"
                                     class="form-control">
                                 <datalist id="daysoptions">
-                                    <option value="All">All</option>
+                                    <option value="Monday-Sunday">Monday-Sunday</option>
                                     <option value="Monday-Saturday">Monday-Saturday</option>
                                     <option value="Monday-Friday">Monday-Friday</option>
                                 </datalist>

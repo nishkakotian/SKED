@@ -91,6 +91,13 @@ function emptyError(errorContainerId) {
     document.getElementById(errorContainerId).innerHTML = "";
 }
 
+//clicking on any date in calendar should show already booked slots
+// function bookingRequests() {
+//     const Booking = Parse.Object.extend("Booking");
+//     const q = new Parse.Query(Booking);
+//     q.equalTo("venue",)
+// }
+
 function insertDetails() {
 
     let params = new URLSearchParams(location.search);
@@ -121,6 +128,26 @@ function venueDetails(el) {
     window.location.href = "venue.html?id=" + el.id;
 }
 
+function approveReq(el, id) {
+    const Booking = Parse.Object.extend("Booking");
+    const q = new Parse.Query(Booking);
+    q.get(id).then((object) => {
+        object.set("approvedStatus", true);
+        object.save().then(() => {
+            el.innerHTML = "Approved";
+            el.classList.remove("cardpink-btn");
+            el.classList.add("cardpurple-btn");
+            el.disabled = true; //disable approve button after approval
+            const card = document.getElementById(id);
+            card.classList.remove("cardpink-bg");
+            card.classList.add("cardpurple-bg");
+        }, function error(err) {
+            console.log(err);
+        });
+    });
+
+}
+
 function displayVenue(displayArea, venue) {
     var venuediv = document.createElement("div");
     venuediv.className = "venue col-sm-12 col-md-6 col-lg-3 mb-4 d-flex align-items-stretch";
@@ -138,13 +165,39 @@ function displayVenue(displayArea, venue) {
     displayArea.appendChild(venuediv);
 }
 
+function displayBooking(displayArea, booking) {
+    var bookingdiv = document.createElement("div");
+    bookingdiv.className = "col-12";
+    var name = booking.get("fullName");
+    var email = booking.get("email");
+
+    var venueName = booking.get("venue").get("venueName");
+    var date = booking.get("date");
+    var timeSlot = booking.get("timeSlot");
+    var details = booking.get("details");
+
+    var bookingId = booking.id;
+    bookingdiv.innerHTML =
+        `<div class="card mb-3 cardpink-bg" id="${bookingId}">
+            <div class="card-header">
+                ${venueName} ${date} ${timeSlot}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Booking Request by - ${name} (${email})</h5>
+                <p class="card-text">${details}</p>
+                <button onclick="approveReq(this,'${bookingId}')" class="btn text-light cardpink-btn">Approve</button>
+            </div>
+        </div>`
+    displayArea.appendChild(bookingdiv);
+}
+
 function getOwnerData() {
     const user = Parse.User.current();
     document.getElementById("ownername").innerHTML = user.attributes.username;
 
     const Venues = Parse.Object.extend("Venues");
     const query = new Parse.Query(Venues);
-    query.equalTo("ownerName", user.attributes.username);
+    query.equalTo("owner", user);
     query.find().then(function findVenues(results) {
         if (results.length == 0) {
             document.getElementById("novenues").classList.remove("d-none");
@@ -157,8 +210,30 @@ function getOwnerData() {
                 i += 1;
             });
         }
+
+        const Booking = Parse.Object.extend("Booking");
+        const query2 = new Parse.Query(Booking);
+
+        query2.equalTo("owner", user);
+        query2.find().then(function findBookings(results) {
+            if (results.length == 0) {
+                document.getElementById("nobookings").classList.remove("d-none");
+            } else {
+                document.getElementById("bookingReq").classList.remove("d-none");
+                const displayArea = document.getElementById("displayBookings");
+                results.forEach((booking, index) => {
+                    if (i == 11) { i = 0; }
+                    displayBooking(displayArea, booking);
+                    i += 1;
+                });
+            }
+        }, function error(err) {
+            console.log('Error : ', err);
+        });
+
+
     }, function error(err) {
-        alert('Error : ', err.message);
+        console.log('Error : ', err);
     });
 }
 
@@ -218,7 +293,7 @@ function createVenue() {
         acl.setWriteAccess(owner.id, true);
 
         venue.setACL(acl);
-        venue.set("ownerName", owner.get("username"));
+        venue.set("owner", owner); //pointer to owner
         venue.set("venueName", venuename);
         venue.set("address", address);
         venue.set("city", city);
@@ -233,9 +308,10 @@ function createVenue() {
             displayVenue(displayArea, venue);
             i += 1;
             if (i == 11) { i = 0; }
-            alert("Venue added successfully!");
+            location.reload();
+            // alert("Venue added successfully!");
         }, function error(err) {
-            alert("Error adding venue : " + err);
+            alert("Error adding venue : " + err.message);
         });
     }
 
@@ -287,11 +363,15 @@ function fillDates(mm, yy, today) {
 }
 
 function getDates() {
+    var dd = today.getDate().toString().padStart(2, '0');
     var mm = today.getMonth();
     var yy = today.getFullYear();
 
     mmcounter = mm;
     yycounter = yy;
+
+    let month = (mm + 1).toString().padStart(2, '0');
+    document.getElementById("date").setAttribute("min", yy + "-" + month + "-" + dd);
 
     fillDates(mmcounter, yycounter, today);
 }
@@ -314,4 +394,57 @@ function prevDates() {
     }
     document.getElementById("dayscontainer").textContent = "";
     fillDates(mmcounter, yycounter, today);
+}
+
+function bookVenue() {
+    document.getElementById("bookingError").innerHTML = "";
+    const name = document.getElementById("custName").value;
+    const email = document.getElementById("email").value;
+    const date = document.getElementById("date").value;
+    const timeStart = document.getElementById("starttime").value
+    const timeEnd = document.getElementById("endtime").value;
+    const details = document.getElementById("purpose").value;
+
+    if (!name || !email || !date || !timeStart || !timeEnd || !details) {
+        document.getElementById("bookingError").innerHTML = "Please fill all the fields.";
+    }
+    else {
+        const user = Parse.User.current();
+        let params = new URLSearchParams(location.search);
+        let venueId = params.get('id');
+
+        const Venues = Parse.Object.extend("Venues");
+        const q = new Parse.Query(Venues);
+        q.get(venueId).then(function success(object) {
+            var ownerOfVen = object.get("owner");
+
+            const Booking = Parse.Object.extend("Booking");
+            const booking = new Booking();
+
+            var acl = new Parse.ACL();
+            acl.setReadAccess(ownerOfVen, true);
+            acl.setWriteAccess(ownerOfVen, true);
+
+            booking.set("ACL", acl);
+            booking.set("fullName", name);
+            booking.set("email", email);
+            booking.set("date", date);
+            booking.set("timeSlot", timeStart + timeEnd);
+            booking.set("details", details);
+            booking.set("venue", object);
+            booking.set("owner", ownerOfVen);
+            booking.set("bookedBy", user);
+            booking.set("approvedStatus", false);
+
+            booking.save().then(function success(booking) {
+                document.getElementById("venueBookForm").reset();
+                document.getElementById("bookingSuccess").innerHTML = "Booking done successfuly!";
+                console.log("Booking done!");
+            }, function error(err) {
+                console.log("Error: ", err);
+            });
+        }, function error(err) {
+            console.log(err);
+        });
+    }
 }
