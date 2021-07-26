@@ -87,6 +87,12 @@ function logout() {
     });
 }
 
+function logout_customer() {
+    Parse.User.logOut().then(function gotohome_customer() {
+        window.location.href = "home_customer.html";
+    });
+}
+
 function emptyError(errorContainerId) {
     document.getElementById(errorContainerId).innerHTML = "";
 }
@@ -129,6 +135,11 @@ function venueDetails(el) {
 }
 
 function approveReq(el, id) {
+
+    if (el.innerHTML == "Approved") {
+        return;
+    }
+
     const Booking = Parse.Object.extend("Booking");
     const q = new Parse.Query(Booking);
     q.get(id).then((object) => {
@@ -137,7 +148,6 @@ function approveReq(el, id) {
             el.innerHTML = "Approved";
             el.classList.remove("cardpink-btn");
             el.classList.add("cardpurple-btn");
-            el.disabled = true; //disable approve button after approval
             const card = document.getElementById(id);
             card.classList.remove("cardpink-bg");
             card.classList.add("cardpurple-bg");
@@ -165,7 +175,7 @@ function displayVenue(displayArea, venue) {
     displayArea.appendChild(venuediv);
 }
 
-function displayBooking(displayArea, booking) {
+function displayBooking(displayArea, booking, isOwner) {
     var bookingdiv = document.createElement("div");
     bookingdiv.className = "col-12";
     var name = booking.get("fullName");
@@ -176,18 +186,48 @@ function displayBooking(displayArea, booking) {
     var timeSlot = booking.get("timeSlot");
     var details = booking.get("details");
 
+    var status = booking.get("approvedStatus"); //boolean value.True if approved.
+    var status_showCustomer, status_showOwner, color_class_card, color_class_btn;
+    if (status) {
+        status_showCustomer = "Approved";
+        status_showOwner = "Approved";
+        color_class_card = "cardpurple-bg";
+        color_class_btn = "cardpurple-btn";
+    }
+    else {
+        status_showCustomer = "Approval Pending";
+        status_showOwner = "Approve";
+        color_class_card = "cardpink-bg";
+        color_class_btn = "cardpink-btn";
+    }
+
     var bookingId = booking.id;
-    bookingdiv.innerHTML =
-        `<div class="card mb-3 cardpink-bg" id="${bookingId}">
+
+    if (isOwner == true) {
+        bookingdiv.innerHTML =
+            `<div class="card mb-3 ${color_class_card}" id="${bookingId}">
             <div class="card-header">
-                ${venueName} ${date} ${timeSlot}
+                 ${name} [${email}]
             </div>
             <div class="card-body">
-                <h5 class="card-title">Booking Request by - ${name} (${email})</h5>
+                <h5 class="card-title">${venueName} , ${date}  &nbsp; ${timeSlot}</h5>
                 <p class="card-text">${details}</p>
-                <button onclick="approveReq(this,'${bookingId}')" class="btn text-light cardpink-btn">Approve</button>
+                <button onclick="approveReq(this,'${bookingId}')" class="btn text-light ${color_class_btn}">${status_showOwner}</button>
             </div>
         </div>`
+    }
+    else { //is Customer
+        bookingdiv.innerHTML =
+            `<div class="card mb-3 ${color_class_card}">
+                <div class="card-header">
+                    <h5>${venueName} , ${date} &nbsp; ${timeSlot}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">${details}</p>
+                    <div class="btn text-light ${color_class_btn}">${status_showCustomer}</div>
+                </div>
+            </div>`
+    }
     displayArea.appendChild(bookingdiv);
 }
 
@@ -222,9 +262,7 @@ function getOwnerData() {
                 document.getElementById("bookingReq").classList.remove("d-none");
                 const displayArea = document.getElementById("displayBookings");
                 results.forEach((booking, index) => {
-                    if (i == 11) { i = 0; }
-                    displayBooking(displayArea, booking);
-                    i += 1;
+                    displayBooking(displayArea, booking, true);
                 });
             }
         }, function error(err) {
@@ -422,6 +460,7 @@ function bookVenue() {
             const booking = new Booking();
 
             var acl = new Parse.ACL();
+            acl.setReadAccess(user, true);
             acl.setReadAccess(ownerOfVen, true);
             acl.setWriteAccess(ownerOfVen, true);
 
@@ -429,7 +468,7 @@ function bookVenue() {
             booking.set("fullName", name);
             booking.set("email", email);
             booking.set("date", date);
-            booking.set("timeSlot", timeStart + timeEnd);
+            booking.set("timeSlot", timeStart + " - " + timeEnd);
             booking.set("details", details);
             booking.set("venue", object);
             booking.set("owner", ownerOfVen);
@@ -447,4 +486,35 @@ function bookVenue() {
             console.log(err);
         });
     }
+}
+
+function showBookings(el) {
+
+    if (el.innerHTML == "Show Venues") {
+        el.innerHTML = "Show Bookings";
+        document.getElementById("customerBookings").style.display = "none";
+        document.getElementById("venues").style.display = "block";
+    }
+    else {
+        el.innerHTML = "Show Venues";
+        document.getElementById("venues").style.display = "none";
+        document.getElementById("customerBookings").style.display = "block";
+
+        const displayArea = document.getElementById("customerBookings");
+        const user = Parse.User.current();
+        const Booking = Parse.Object.extend("Booking");
+        const query = new Parse.Query(Booking);
+        query.equalTo("bookedBy", user);
+        query.find().then(function (results) {
+            if (results.length == 0) {
+                document.getElementById("customerBookings").innerHTML = "You don't have any bookings!";
+            }
+            else {
+                results.forEach((booking) => {
+                    displayBooking(displayArea, booking, false);
+                });
+            }
+        });
+    }
+
 }

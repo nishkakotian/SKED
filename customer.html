@@ -15,17 +15,8 @@
     <link rel="stylesheet" href="public/style.css">
     <title>Sked</title>
     <style>
-        #mybookings {
-            color: #fff;
-            text-decoration: none;
-            margin-right: 10px;
-            font-size: large;
-        }
-
-        #mybookings:hover {
-            color: rgb(226, 255, 245);
-            text-decoration: underline;
-            text-underline-position: under;
+        .navbtns {
+            background-color: inherit;
         }
     </style>
 </head>
@@ -38,17 +29,24 @@
                 S K E D
             </a>
             <div id="bookings">
-                <a href="#" id="mybookings">My Bookings</a>
+                <button class="navbtns navlink" onclick="logout_customer()">Log Out</button>
+                <button class="navbtns navlink" id="mybookings" onclick="showBookings(this)">Show Bookings</button>
             </div>
         </div>
     </nav>
+
+    <div class="container">
+        <div id="customerBookings" class="row my-4">
+
+        </div>
+    </div>
 
     <div id="venues">
         <div class="container" id="viewOnlyVenues">
             <h2 style="font-weight: 300;" class="mb-4">V E N U E S</h2>
             <div class="input-group input-group-lg mb-4">
                 <input type="text" id="locationfilter" name="venuesfilter" class="form-control" aria-label="searchBar"
-                    aria-describedby="locationSearchBar">
+                    aria-describedby="locationSearchBar" placeholder="Enter a location..">
                 <button type="button" class="btn btn-secondary" id="locationSearchBar"
                     onclick="filterVenues();">Search</button>
                 <div id="filterNoResults" class="my-3 text-danger"></div>

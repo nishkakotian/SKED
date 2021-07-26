@@ -41,20 +41,20 @@ footer{
 .bg-light-blue{
     background-color: #3c4595;
 }
-/* [TODO : Add link in navbar of home.html to home_customer.html and vice versa.]
+/* [TODO : Add link in navbar of home.html to home_customer.html and vice versa.] */
  .navlink{
     float: right;
     padding-right: 20px;
     text-decoration: none;
-    font-size: 20px;
-    color: #8ca5ec;
+    font-size: 18px;
+    color: #94b7dd;
 
 }
 .navlink:hover{
-    color: #b7ceff;
+    color: #cff8fb;
     text-decoration: underline;
     text-underline-position: under;
-} */
+}
 #about{
     background: #F76C6C;
     padding: 70px;
