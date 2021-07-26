@@ -97,13 +97,6 @@ function emptyError(errorContainerId) {
     document.getElementById(errorContainerId).innerHTML = "";
 }
 
-//clicking on any date in calendar should show already booked slots
-// function bookingRequests() {
-//     const Booking = Parse.Object.extend("Booking");
-//     const q = new Parse.Query(Booking);
-//     q.equalTo("venue",)
-// }
-
 function insertDetails() {
 
     let params = new URLSearchParams(location.search);
@@ -372,6 +365,35 @@ function showVenues() {
     });
 }
 
+function checkbooked(year, month, date) {
+    const displayDiv = document.getElementById("bookingsDone");
+    while (displayDiv.firstChild) { //remove any previous timings
+        displayDiv.removeChild(displayDiv.firstChild);
+    }
+
+    const datecheck = year + "-" + month.toString().padStart(2, '0') + "-" + date.toString().padStart(2, '0');
+    const Booking = Parse.Object.extend("Booking");
+
+    const query = new Parse.Query(Booking);
+    query.equalTo("date", datecheck);
+    query.find().then(function success(results) {
+        var spanEl = document.createElement("span");
+        if (results.length == 0) {
+            spanEl.className = "tag bg-warning";
+            spanEl.innerHTML = "No bookings to show"
+        }
+        else {
+            results.forEach((booking) => {
+                spanEl.className = "tag tag-booked";
+                spanEl.innerHTML = booking.get("timeSlot");
+            });
+        }
+        displayDiv.appendChild(spanEl);
+    }, function error(err) {
+        console.log(err);
+    });
+}
+
 function fillDates(mm, yy, today) {
     var d = new Date(yy, mm, 1);
     var firstday = d.getDay(); // weekday for the 1st day of that month 
@@ -389,9 +411,11 @@ function fillDates(mm, yy, today) {
 
     for (let j = 1; j <= numofdays; j++) {
         var dd = new Date(yy, mm, j);
-        dd.setHours(23, 59, 59, 999);
+
+        // dd.setHours(23, 59, 59, 999); 
+
         if (dd.getTime() >= today.getTime()) {
-            dates = `<button class="future">${j}</button>`;
+            dates = `<button class="future" onclick="checkbooked(${yy},${mm + 1},${j})">${j}</button>`;
         }
         else {
             dates = `<button disabled class="past">${j}</button>`;
