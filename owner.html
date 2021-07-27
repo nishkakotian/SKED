@@ -37,7 +37,6 @@
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <button class="btn nav-link btn-link" onclick="logout()">Sign out</button>
@@ -63,6 +62,14 @@
                                 aria-controls="bookingRequests">
                                 <i class="fas fa-users me-2"></i>
                                 Requests
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a type="button" class="nav-link m-2" id="today-tab" data-bs-toggle="pill"
+                                data-bs-target="#todaysEvents" aria-selected="false" role="tab"
+                                aria-controls="todaysEvents">
+                                <i class="fas fa-calendar-day me-2"></i>
+                                Events today
                             </a>
                         </li>
                         <li class="nav-item">
@@ -107,6 +114,16 @@
                         </div>
                         <div id="displayBookings" class="row">
                             <h5 class="mt-4 mb-3 d-none" id="bookingReq">Booking Requests</h5>
+                        </div>
+                    </div>
+                    <div id="todaysEvents" class="tab-pane" role="tabpanel" aria-labelledby="today-tab">
+                        <div class="card mt-4 w-75 defaultMsg d-none" id="nothingToday">
+                            <div class="card-body">
+                                There are no events booked for today.
+                            </div>
+                        </div>
+                        <div id="displayTodaysEvents" class="row">
+                            <h5 class="mt-4 mb-3 d-none" id="events2day">Bookings for today</h5>
                         </div>
                     </div>
                     <div id="usageStats" class="tab-pane" role="tabpanel" aria-labelledby="stats-tab">

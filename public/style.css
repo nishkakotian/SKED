@@ -52,8 +52,6 @@ footer{
 }
 .navlink:hover{
     color: #cff8fb;
-    text-decoration: underline;
-    text-underline-position: under;
 }
 #about{
     background: #F76C6C;
@@ -125,11 +123,12 @@ margin-top: 1px;
 margin-bottom: 1px;
 }
 
-.tag-occupied{
+/* Add any other tag
+ .tag-x{
 background-color: #fff3d3; 
-}
+} */
 
-.tag-free{
+.tag-place{
 background-color: #cffae9;
 }
 
@@ -213,6 +212,10 @@ background-color: #ffe1d3;
 }
 .cardpurple-btn{
     background-color: #7d3d8d;
+}
+
+.card-green{
+    background-color: rgb(239, 251, 235);
 }
 
 @media (max-width:992px){

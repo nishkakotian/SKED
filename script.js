@@ -7,6 +7,7 @@ Parse.serverURL = 'https://pg-app-l1q9134ksi5ivcf6bu5yeuerlqpzaw.scalabl.cloud/1
 var i = 0; //iterator for colours in venue cards
 const colours = ["#8a068f", "#06148f", "#c70a62", "#0a9956", "#e78659", "#87b40d", "#0791b4", "#8609ce", "#4c7e80", "#c2427e", "#838080"];
 var params, venueId;
+var flag;
 
 //Function to toggle the type for password input element
 function visibilityToggle(pswdId, iconId) {
@@ -175,13 +176,13 @@ function displayVenue(displayArea, venue) {
     venuediv.className = "venue col-sm-12 col-md-6 col-lg-3 mb-4 d-flex align-items-stretch";
     var photo = venue.get("image1").url();
     var objId = venue.id;
-    //[TODO : Here span always says free, check condition & add appropriate tags]
+
     venuediv.innerHTML =
         `<div class='card' id='${objId}' onclick='venueDetails(this)' style ='border-bottom: 4px solid ${colours[i]};'>
             <img class='card-img-top' height='230px' src='${photo}'>
             <div class='card-body'>
-                <h5 class='card-title'>${venue.attributes.venueName}</h5>
-                <span class='tag tag-free'><small>free</small></span>
+                <h5 class='card-title'>${venue.get("venueName")}</h5>
+                <span class='tag tag-place'><small>${venue.get("city")}</small></span>
             </div>
         </div>`;
     displayArea.appendChild(venuediv);
@@ -227,7 +228,31 @@ function displayBooking(displayArea, booking, isOwner) {
                 <p class="card-text">${details}</p>
                 <button onclick="approveReq(this,'${bookingId}')" class="btn text-light ${color_class_btn}">${status_showOwner}</button>
             </div>
-        </div>`
+        </div>`;
+
+        //today's events tab
+        var d = new Date();
+        var d_year = d.getFullYear();
+        var d_month = (d.getMonth() + 1).toString().padStart(2, "0");
+        var d_date = d.getDate().toString().padStart(2, "0");
+
+        if (status && date == d_date + "-" + d_month + "-" + d_year) {
+            if (!flag) {
+                flag = true; //found atleast one event for that day
+            }
+            const todays = document.getElementById("displayTodaysEvents");
+            const divelement = document.createElement("div");
+            divelement.innerHTML =
+                `<div class="card mb-3 card-green" >
+                    <div class="card-header">
+                        <h5>${venueName} , ${timeSlot}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">${details}</p>
+                    </div>
+                </div > `;
+            todays.appendChild(divelement);
+        }
     }
     else { //is Customer
         bookingdiv.innerHTML =
@@ -239,7 +264,7 @@ function displayBooking(displayArea, booking, isOwner) {
                     <p class="card-text">${details}</p>
                     <div class="btn text-light ${color_class_btn}">${status_showCustomer}</div>
                 </div>
-            </div>`
+            </div>`;
     }
     displayArea.appendChild(bookingdiv);
 }
@@ -275,15 +300,20 @@ function getOwnerData() {
             } else {
                 document.getElementById("bookingReq").classList.remove("d-none");
                 const displayArea = document.getElementById("displayBookings");
+                flag = false;
                 results.forEach((results, index) => {
                     displayBooking(displayArea, results, true);
                 });
+                if (!flag) {
+                    document.getElementById("nothingToday").classList.remove("d-none");
+                }
+                else {
+                    document.getElementById("events2day").classList.remove("d-none");
+                }
             }
         }, function error(err) {
             console.log('Error : ', err);
         });
-
-
     }, function error(err) {
         console.log('Error : ', err);
     });
