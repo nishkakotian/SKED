@@ -6,6 +6,7 @@ Parse.serverURL = 'https://pg-app-l1q9134ksi5ivcf6bu5yeuerlqpzaw.scalabl.cloud/1
 
 var i = 0; //iterator for colours in venue cards
 const colours = ["#8a068f", "#06148f", "#c70a62", "#0a9956", "#e78659", "#87b40d", "#0791b4", "#8609ce", "#4c7e80", "#c2427e", "#838080"];
+var params, venueId;
 
 //Function to toggle the type for password input element
 function visibilityToggle(pswdId, iconId) {
@@ -99,8 +100,8 @@ function emptyError(errorContainerId) {
 
 function insertDetails() {
 
-    let params = new URLSearchParams(location.search);
-    let venueId = params.get('id');
+    params = new URLSearchParams(location.search);
+    venueId = params.get('id');
     const Venue = Parse.Object.extend("Venues");
     const query = new Parse.Query(Venue);
     query.get(venueId).then((venue) => {
@@ -137,7 +138,25 @@ function approveReq(el, id) {
     const q = new Parse.Query(Booking);
     q.get(id).then((object) => {
         object.set("approvedStatus", true);
-        object.save().then(() => {
+        object.save().then((booking) => {
+
+            //create a row in ApprovedBookings class which has public read access
+            const ApprovedBookings = Parse.Object.extend("ApprovedBookings");
+            const approved = new ApprovedBookings();
+
+            const acl = new Parse.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setWriteAccess(Parse.User.current(), true);
+
+            approved.set("date", booking.get("date"));
+            approved.set("timeSlot", booking.get("timeSlot"));
+            approved.set("venueID", booking.get("venue").id);
+            approved.save().then(function () {
+                console.log("approved ands saved!");
+            }, function error(err) {
+                console.log(err);
+            });
+
             el.innerHTML = "Approved";
             el.classList.remove("cardpink-btn");
             el.classList.add("cardpurple-btn");
@@ -254,8 +273,8 @@ function getOwnerData() {
             } else {
                 document.getElementById("bookingReq").classList.remove("d-none");
                 const displayArea = document.getElementById("displayBookings");
-                results.forEach((booking, index) => {
-                    displayBooking(displayArea, booking, true);
+                results.forEach((results, index) => {
+                    displayBooking(displayArea, results, true);
                 });
             }
         }, function error(err) {
@@ -367,15 +386,16 @@ function showVenues() {
 
 function checkbooked(year, month, date) {
     const displayDiv = document.getElementById("bookingsDone");
-    while (displayDiv.firstChild) { //remove any previous timings
+    while (displayDiv.firstChild) { //remove any previous timings displayed
         displayDiv.removeChild(displayDiv.firstChild);
     }
 
     const datecheck = year + "-" + month.toString().padStart(2, '0') + "-" + date.toString().padStart(2, '0');
-    const Booking = Parse.Object.extend("Booking");
 
-    const query = new Parse.Query(Booking);
-    query.equalTo("date", datecheck);
+    const Venues = Parse.Object.extend("Venues");
+    const apprBooking = Parse.Object.extend("ApprovedBookings");
+    const query = new Parse.Query(apprBooking);
+    query.equalTo("venueID", venueId) && query.equalTo("date", datecheck);
     query.find().then(function success(results) {
         var spanEl = document.createElement("span");
         if (results.length == 0) {
@@ -472,8 +492,8 @@ function bookVenue() {
     }
     else {
         const user = Parse.User.current();
-        let params = new URLSearchParams(location.search);
-        let venueId = params.get('id');
+        // let params = new URLSearchParams(location.search);
+        // let venueId = params.get('id');
 
         const Venues = Parse.Object.extend("Venues");
         const q = new Parse.Query(Venues);
@@ -512,33 +532,34 @@ function bookVenue() {
     }
 }
 
-function showBookings(el) {
+function getCustomerBookings() {
+    const displayArea = document.getElementById("customerBookings");
+    const user = Parse.User.current();
+    const Booking = Parse.Object.extend("Booking");
+    const query = new Parse.Query(Booking);
+    query.equalTo("bookedBy", user);
+    query.find().then(function (results) {
+        if (results.length == 0) {
+            document.getElementById("customerBookings").innerHTML = "You don't have any bookings!";
+        }
+        else {
+            results.forEach((booking) => {
+                displayBooking(displayArea, booking, false);
+            });
+        }
+    });
+}
 
+function showBookings(el) {
     if (el.innerHTML == "Show Venues") {
         el.innerHTML = "Show Bookings";
-        document.getElementById("customerBookings").style.display = "none";
+        document.getElementById("customerBookings").classList.add("d-none");
         document.getElementById("venues").style.display = "block";
     }
     else {
         el.innerHTML = "Show Venues";
         document.getElementById("venues").style.display = "none";
-        document.getElementById("customerBookings").style.display = "block";
-
-        const displayArea = document.getElementById("customerBookings");
-        const user = Parse.User.current();
-        const Booking = Parse.Object.extend("Booking");
-        const query = new Parse.Query(Booking);
-        query.equalTo("bookedBy", user);
-        query.find().then(function (results) {
-            if (results.length == 0) {
-                document.getElementById("customerBookings").innerHTML = "You don't have any bookings!";
-            }
-            else {
-                results.forEach((booking) => {
-                    displayBooking(displayArea, booking, false);
-                });
-            }
-        });
+        document.getElementById("customerBookings").classList.remove("d-none");
     }
 
 }

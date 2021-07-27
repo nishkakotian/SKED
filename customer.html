@@ -21,7 +21,7 @@
     </style>
 </head>
 
-<body onload="showVenues();">
+<body onload="showVenues(); getCustomerBookings();">
     <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
         <div class="container">
             <a class="navbar-brand" href="#" id="brand">
@@ -36,7 +36,7 @@
     </nav>
 
     <div class="container">
-        <div id="customerBookings" class="row my-4">
+        <div id="customerBookings" class="row my-4 d-none">
 
         </div>
     </div>
