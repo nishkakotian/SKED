@@ -155,8 +155,10 @@ function approveReq(el, id) {
             approved.set("date", booking.get("date"));
             approved.set("timeSlot", booking.get("timeSlot"));
             approved.set("venueID", booking.get("venue").id);
+            approved.set("parent", object);
+            approved.setACL(acl);
             approved.save().then(function () {
-                console.log("approved ands saved!");
+                console.log("approved and saved!");
             }, function error(err) {
                 console.log(err);
             });
@@ -557,7 +559,7 @@ function bookVenue() {
 
             booking.save().then(function success(booking) {
                 document.getElementById("venueBookForm").reset();
-                document.getElementById("bookingSuccess").innerHTML = "Booking done successfuly!";
+                document.getElementById("bookingSuccess").innerHTML = "Booking done successfully!";
                 console.log("Booking done!");
             }, function error(err) {
                 console.log("Error: ", err);
