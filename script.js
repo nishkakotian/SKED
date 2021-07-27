@@ -194,7 +194,8 @@ function displayBooking(displayArea, booking, isOwner) {
     var email = booking.get("email");
 
     var venueName = booking.get("venue").get("venueName");
-    var date = booking.get("date");
+    var bookingdate = booking.get("date").split("-");
+    var date = [bookingdate[2], bookingdate[1], bookingdate[0]].join("-"); //convert to dd-mm-yyyy format
     var timeSlot = booking.get("timeSlot");
     var details = booking.get("details");
 
@@ -296,7 +297,7 @@ function filterVenues() {
     query.equalTo("city", loc);
     query.find().then(function findVenues(results) {
         if (results.length == 0) {
-            document.getElementById("filterNoResults").innerHTML = "No venues found in " + loc;
+            document.getElementById("filterNoResults").innerHTML = "No venues found !";
         } else {
             const displayArea = document.getElementById("showVenuesHomepg");
             displayArea.textContent = ""; //Remove all venues so as to display only the filtered venues
@@ -544,7 +545,8 @@ function getCustomerBookings() {
     query.include("venue");
     query.find().then(function (results) {
         if (results.length == 0) {
-            document.getElementById("customerBookings").innerHTML = "You don't have any bookings!";
+            displayArea.innerHTML = "You don't have any bookings!";
+            displayArea.className = " mt-4 alert alert-primary d-none";
         }
         else {
             results.forEach((booking) => {
