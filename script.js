@@ -100,7 +100,6 @@ function emptyError(errorContainerId) {
 }
 
 function insertDetails() {
-
     params = new URLSearchParams(location.search);
     venueId = params.get('id');
     const Venue = Parse.Object.extend("Venues");
@@ -119,9 +118,13 @@ function insertDetails() {
         document.getElementById("days").innerHTML = venue.get("daysAvailable");
         document.getElementById("timing").innerHTML = venue.get("timings");
 
+        document.getElementById("loader").style.display = "none";
+
     }, (err) => {
         // The object was not retrieved successfully.
         alert("Error occured: ", err.message);
+        document.getElementById("loader").style.display = "none";
+
     });
 }
 

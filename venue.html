@@ -14,9 +14,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="public/style.css">
     <title>Sked</title>
+    <style>
+        #loader {
+            border: 10px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 10px solid #36d0ff;
+            height: 60px;
+            width: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .centered {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
 </head>
 
 <body onload="insertDetails(); getDates();">
+    <div id="loader" class="centered"></div>
     <nav class=" navbar navbar-dark" style="background-image: linear-gradient(90deg,#212066,#03acfa,#ddf867)">
         <div class=" container">
             <a class="navbar-brand" href="#" id="brand" style="text-align: center;">
