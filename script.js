@@ -267,6 +267,7 @@ function getOwnerData() {
         const query2 = new Parse.Query(Booking);
 
         query2.equalTo("owner", user);
+        query2.descending("createdAt");
         query2.find().then(function findBookings(results) {
             if (results.length == 0) {
                 document.getElementById("nobookings").classList.remove("d-none");
@@ -395,7 +396,8 @@ function checkbooked(year, month, date) {
     const Venues = Parse.Object.extend("Venues");
     const apprBooking = Parse.Object.extend("ApprovedBookings");
     const query = new Parse.Query(apprBooking);
-    query.equalTo("venueID", venueId) && query.equalTo("date", datecheck);
+    query.equalTo("venueID", venueId);
+    query.equalTo("date", datecheck);
     query.find().then(function success(results) {
         var spanEl = document.createElement("span");
         if (results.length == 0) {
@@ -538,6 +540,8 @@ function getCustomerBookings() {
     const Booking = Parse.Object.extend("Booking");
     const query = new Parse.Query(Booking);
     query.equalTo("bookedBy", user);
+    query.descending("createdAt");
+    query.include("venue");
     query.find().then(function (results) {
         if (results.length == 0) {
             document.getElementById("customerBookings").innerHTML = "You don't have any bookings!";
