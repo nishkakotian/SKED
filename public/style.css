@@ -4,44 +4,54 @@
     border: 0;
     box-sizing: border-box;
 }
+
 button:hover{
     opacity: 0.9;
 }
+
 .btn:active,.btn:focus{
     outline: none;
     box-shadow: none;
 }
+
 body{
     position: relative;
     min-height: 100vh;
 }
+
 footer{
     position: absolute;
     bottom: 0;
     width: 100%;
 }
+
 #brand{
     color: #37F3FF;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
 }
+
 #brand > img{
     margin-left: 20px;
 }
+
 .bg-blue{
     background-color: #24305E;
 }
+
 .bg-white{
     background-color: #fff;
 }
+
 /* purple : #965ccd */
 .text-light-blue{
     color: #4650aa;
 }
+
 .bg-light-blue{
     background-color: #3c4595;
 }
-/* [TODO : Add link in navbar of home.html to home_customer.html and vice versa.] */
+
  .navlink{
     float: right;
     padding-right: 20px;
@@ -50,37 +60,46 @@ footer{
     color: #94b7dd;
 
 }
+
 .navlink:hover{
     color: #cff8fb;
 }
+
 #about{
     background: #F76C6C;
     padding: 70px;
 }
+
 #info{
     font-family: Varela;
     color: #fff;
     margin: auto;
     font-size: 54px;
 }
+
 #registerbtn{
     background-color:#FFF6D6;
 }
+
 #mainhead{
     text-align: center;
 }
+
 #leftcol{
     display: inline-block;
     text-align: left;
 }
+
 #demovid{
     margin: auto;
 }
+
 #ytvid{
     position: relative;
     width: 100%;
     padding-bottom: 56.25%;
 }
+
 #ytvid > iframe{
     position: absolute;
     top: 0;
@@ -90,10 +109,12 @@ footer{
     height: 100%;
     width: 100%;
 }
+
 #features > h2{
     color: rgb(18, 56, 139);
     font-weight: 300;
 }
+
 #features,#viewOnlyVenues{
     padding-top: 60px;
     padding-bottom: 60px;
@@ -215,7 +236,13 @@ background-color: #ffe1d3;
 }
 
 .card-green{
-    background-color: rgb(239, 251, 235);
+    background-color: rgb(244, 253, 242);
+}
+
+.delete-btn {
+    background-color: inherit;
+    float: right;
+    color: #cc2557;
 }
 
 @media (max-width:992px){

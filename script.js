@@ -118,6 +118,10 @@ function insertDetails() {
         document.getElementById("days").innerHTML = venue.get("daysAvailable");
         document.getElementById("timing").innerHTML = venue.get("timings");
 
+        var hiddencontent = document.getElementsByClassName("whileLoadHide");
+        while (hiddencontent.length != 0) {
+            hiddencontent[0].classList.remove("whileLoadHide");
+        }
         document.getElementById("loader").style.display = "none";
 
     }, (err) => {
@@ -176,6 +180,46 @@ function approveReq(el, id) {
 
 }
 
+function deleteBooking(bookingid) {
+    const Booking = Parse.Object.extend("Booking");
+    const query = new Parse.Query(Booking);
+
+    query.get(bookingid).then((bking) => {
+
+        const status = bking.get("approvedStatus");
+
+        //If approved,first remove record from ApprovedBookings class.
+        if (status) {
+            const apprBookings = Parse.Object.extend("ApprovedBookings");
+            const q = new Parse.Query(apprBookings);
+            q.equalTo("parent", bking);
+            q.find().then((result) => {
+                result[0].destroy().then(() => {
+                    console.log("Deleted booking from ApprovedBookings");
+
+                    //Next remove from Booking class
+                    bking.destroy().then(() => {
+                        const bookingcard = document.getElementById(bookingid);
+                        bookingcard.parentElement.removeChild(bookingcard);
+                        console.log("Deleted from Booking");
+                    });
+                });
+            }, (err) => {
+                console.log(err);
+            });
+        }
+        else { //just remove the non approved booking from Booking class
+            bking.destroy().then(() => {
+                const bookingcard = document.getElementById(bookingid);
+                bookingcard.parentElement.removeChild(bookingcard);
+                console.log("Deleted from Booking");
+            }, (err) => {
+                console.log(err);
+            });
+        }
+    });
+}
+
 function displayVenue(displayArea, venue) {
     var venuediv = document.createElement("div");
     venuediv.className = "venue col-sm-12 col-md-6 col-lg-3 mb-4 d-flex align-items-stretch";
@@ -204,6 +248,7 @@ function displayBooking(displayArea, booking, isOwner) {
     var date = [bookingdate[2], bookingdate[1], bookingdate[0]].join("-"); //convert to dd-mm-yyyy format
     var timeSlot = booking.get("timeSlot");
     var details = booking.get("details");
+    var bookingId = booking.id;
 
     var status = booking.get("approvedStatus"); //boolean value.True if approved.
     var status_showCustomer, status_showOwner, color_class_card, color_class_btn;
@@ -220,27 +265,36 @@ function displayBooking(displayArea, booking, isOwner) {
         color_class_btn = "cardpink-btn";
     }
 
-    var bookingId = booking.id;
+    var d = new Date();
+    var d_year = d.getFullYear();
+    var d_month = (d.getMonth() + 1).toString().padStart(2, "0");
+    var d_date = d.getDate().toString().padStart(2, "0");
+
+    var bd = new Date(bookingdate[0], parseInt(bookingdate[1]) - 1, bookingdate[2]);
+
+    var deleteDisplay;
+    if (bd.getTime() < d.getTime()) {
+        deleteDisplay = 'inline';
+    }
+    else {
+        deleteDisplay = 'none';
+    }
 
     if (isOwner == true) {
         bookingdiv.innerHTML =
             `<div class="card mb-3 ${color_class_card}" id="${bookingId}">
-            <div class="card-header">
-                 ${name} [${email}]
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">${venueName} , ${date}  &nbsp; ${timeSlot}</h5>
-                <p class="card-text">${details}</p>
-                <button onclick="approveReq(this,'${bookingId}')" class="btn text-light ${color_class_btn}">${status_showOwner}</button>
-            </div>
-        </div>`;
+                <div class="card-header">
+                    ${name} [${email}]
+                    <button class="delete-btn" onclick="deleteBooking('${bookingId}')" style="display:${deleteDisplay};"><i class="far fa-trash-alt"></i></button>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">${venueName} , ${date}  &nbsp; ${timeSlot}</h5>
+                    <p class="card-text">${details}</p>
+                    <button onclick="approveReq(this,'${bookingId}')" class="btn text-light ${color_class_btn}">${status_showOwner}</button>
+                </div>
+            </div>`;
 
         //today's events tab
-        var d = new Date();
-        var d_year = d.getFullYear();
-        var d_month = (d.getMonth() + 1).toString().padStart(2, "0");
-        var d_date = d.getDate().toString().padStart(2, "0");
-
         if (status && date == d_date + "-" + d_month + "-" + d_year) {
             if (!flag) {
                 flag = true; //found atleast one event for that day
@@ -316,8 +370,6 @@ function getOwnerData() {
                     document.getElementById("events2day").classList.remove("d-none");
                 }
             }
-        }, function error(err) {
-            console.log('Error : ', err);
         });
     }, function error(err) {
         console.log('Error : ', err);

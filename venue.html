@@ -38,6 +38,10 @@
             right: 0;
             margin: auto;
         }
+
+        .whileLoadHide {
+            display: none;
+        }
     </style>
 </head>
 
@@ -49,7 +53,7 @@
             </a>
         </div>
     </nav>
-    <div class="container my-4">
+    <div class="container my-4 whileLoadHide">
         <div id="carouselcontrol" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active" id="img1container">
@@ -67,7 +71,6 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-
 
         <div class="my-4 text-light" id="dataHolder"
             style="padding: 20px; border-radius: 10px;background-color: hsl(228, 45%, 25%);">
@@ -87,7 +90,7 @@
         </div>
     </div>
 
-    <div class="container my-4" class="d-none" id="calholder">
+    <div class="container my-4 whileLoadHide" id="calholder">
         <div class="calendar">
             <div class="month">
                 <button id="prev" onclick="prevDates()"><i class="fas fa-angle-left"></i></button>
@@ -116,7 +119,7 @@
         </div>
     </div>
 
-    <div id="bookVenue" class="container mb-4">
+    <div id="bookVenue" class="container mb-4 whileLoadHide">
         <form id="venueBookForm">
             <h4 style="color: #00a090;">Book this venue</h4>
             <div class="row mb-3">
