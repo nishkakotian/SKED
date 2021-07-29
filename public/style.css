@@ -120,9 +120,6 @@ footer{
     padding-bottom: 60px;
     text-align: center;
 }
-/* #venues{
-    background-color: #b7d8f7;
-} */
 
 #features h3{
     font-weight: 400;
@@ -154,7 +151,8 @@ background-color: #cffae9;
 }
 
 .tag-booked{
-background-color: #ffe1d3;
+background-color: #faba9c;
+margin-right: 5px;
 }
 
 .calendar {
