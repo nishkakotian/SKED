@@ -125,7 +125,7 @@ function insertDetails() {
         document.getElementById("loader").style.display = "none";
 
     }, (err) => {
-        // The object was not retrieved successfully.
+        // The object could not be retrieved.
         alert("Error occured: ", err.message);
         document.getElementById("loader").style.display = "none";
 
@@ -222,7 +222,7 @@ function deleteBooking(bookingid) {
 
 function displayVenue(displayArea, venue) {
     var venuediv = document.createElement("div");
-    venuediv.className = "venue col-sm-12 col-md-6 col-lg-3 mb-4 d-flex align-items-stretch";
+    venuediv.className = "venue col-md-6 col-lg-3 mb-4 d-flex align-items-stretch text-center";
     var photo = venue.get("image1").url();
     var objId = venue.id;
 
@@ -487,18 +487,21 @@ function checkbooked(year, month, date) {
     query.equalTo("venueID", venueId);
     query.equalTo("date", datecheck);
     query.find().then(function success(results) {
-        var spanEl = document.createElement("span");
+        var spanEl;
         if (results.length == 0) {
+            spanEl = document.createElement("span");
             spanEl.className = "tag bg-warning";
-            spanEl.innerHTML = "No bookings to show"
+            spanEl.innerHTML = "No bookings to show";
+            displayDiv.appendChild(spanEl);
         }
         else {
             results.forEach((booking) => {
+                spanEl = document.createElement("span");
                 spanEl.className = "tag tag-booked";
                 spanEl.innerHTML = booking.get("timeSlot");
+                displayDiv.appendChild(spanEl);
             });
         }
-        displayDiv.appendChild(spanEl);
     }, function error(err) {
         console.log(err);
     });
