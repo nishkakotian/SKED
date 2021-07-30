@@ -354,21 +354,21 @@ function getOwnerData() {
         query2.equalTo("owner", user);
         query2.descending("createdAt");
         query2.find().then(function findBookings(results) {
+            flag = false;
             if (results.length == 0) {
                 document.getElementById("nobookings").classList.remove("d-none");
             } else {
                 document.getElementById("bookingReq").classList.remove("d-none");
                 const displayArea = document.getElementById("displayBookings");
-                flag = false;
                 results.forEach((results, index) => {
                     displayBooking(displayArea, results, true);
                 });
-                if (!flag) {
-                    document.getElementById("nothingToday").classList.remove("d-none");
-                }
-                else {
-                    document.getElementById("events2day").classList.remove("d-none");
-                }
+            }
+            if (!flag) {
+                document.getElementById("nothingToday").classList.remove("d-none");
+            }
+            else {
+                document.getElementById("events2day").classList.remove("d-none");
             }
         });
     }, function error(err) {
