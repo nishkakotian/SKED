@@ -40,7 +40,7 @@
         <span class="w-100"></span>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <button class="btn nav-link btn-link" onclick="logout()">Sign out</button>
+                <button class="btn nav-link btn-link" onclick="logout(true)">Sign out</button>
             </li>
         </ul>
     </header>
@@ -178,8 +178,6 @@
                                     <option value="Monday-Friday">Monday-Friday</option>
                                 </datalist>
                             </div>
-
-                            <!-- Concatenate topen & tclose in js and put it in a single timing string-->
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label" for="topen">Opens</label>

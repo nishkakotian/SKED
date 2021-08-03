@@ -83,15 +83,14 @@ function login() {
     }
 }
 
-function logout() {
+function logout(isOwner) {
     Parse.User.logOut().then(function gotohome() {
-        window.location.href = "home.html";
-    });
-}
-
-function logout_customer() {
-    Parse.User.logOut().then(function gotohome_customer() {
-        window.location.href = "home_customer.html";
+        if (isOwner) {
+            window.location.href = "home.html";
+        }
+        else {
+            window.location.href = "home_customer.html";
+        }
     });
 }
 
@@ -231,7 +230,7 @@ function displayVenue(displayArea, venue) {
             <img class='card-img-top' height='230px' src='${photo}'>
             <div class='card-body'>
                 <h5 class='card-title'>${venue.get("venueName")}</h5>
-                <span class='tag tag-place'><small>${venue.get("city")}</small></span>
+                <span class='tag tag-place'><small class="capitalised">${venue.get("city")}</small></span>
             </div>
         </div>`;
     displayArea.appendChild(venuediv);
@@ -378,10 +377,10 @@ function getOwnerData() {
 
 function filterVenues() {
     document.getElementById("filterNoResults").innerHTML = "";
-    var loc = document.getElementById("locationfilter").value;
+    var loc = document.getElementById("locationfilter").value.toLowerCase();
     const Venues = Parse.Object.extend("Venues");
     const query = new Parse.Query(Venues);
-    query.equalTo("city", loc);
+    query.startsWith("city", loc);
     query.find().then(function findVenues(results) {
         if (results.length == 0) {
             document.getElementById("filterNoResults").innerHTML = "No venues found !";
@@ -403,10 +402,10 @@ function createVenue() {
     document.getElementById("addVenueError").innerHTML = "";
     const venuename = document.getElementById("nameOfVenue").value;
     const address = document.getElementById("addr").value;
-    const city = document.getElementById("cityName").value;
+    const city = document.getElementById("cityName").value.toLowerCase();
     const daysAvailable = document.getElementById("days").value;
-    const topen = document.getElementById("topen").value;
-    const tclose = document.getElementById("tclose").value;
+    const topen = document.getElementById("topen").value; /*Venue opening time*/
+    const tclose = document.getElementById("tclose").value; /*Venue closing time*/
     const timing = topen + "-" + tclose; //[TODO: Convert to AM-PM format]
 
     const image1 = document.getElementById("image1");
@@ -585,8 +584,6 @@ function bookVenue() {
     }
     else {
         const user = Parse.User.current();
-        // let params = new URLSearchParams(location.search);
-        // let venueId = params.get('id');
 
         const Venues = Parse.Object.extend("Venues");
         const q = new Parse.Query(Venues);
@@ -659,3 +656,13 @@ function showBookings(el) {
     }
 
 }
+
+document.getElementById("locationfilter").addEventListener("keydown", function (event) {
+    if (event.defaultPrevented) {
+        return;
+    }
+
+    if (event.key == "Enter") {
+        document.getElementById("locationSearchBar").click();
+    }
+});

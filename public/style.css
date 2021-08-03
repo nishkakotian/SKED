@@ -115,7 +115,7 @@ footer{
     font-weight: 300;
 }
 
-#features,#viewOnlyVenues{
+#features{
     padding-top: 60px;
     padding-bottom: 60px;
     text-align: center;
@@ -241,6 +241,10 @@ margin-right: 5px;
     background-color: inherit;
     float: right;
     color: #cc2557;
+}
+
+.capitalised{
+    text-transform: capitalize;
 }
 
 @media (max-width:992px){
