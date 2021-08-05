@@ -17,6 +17,8 @@ An owner can :
 
 Demo video : https://youtu.be/CUpRyOhE7kM
 
+Tutorial to build this project can be found here - [Part-1](https://dev.to/nishkakotian/building-a-venue-booking-system-using-parse-and-sashido-part-1-569k), [part-2](https://dev.to/nishkakotian/building-a-venue-booking-system-using-parse-and-sashido-part-2-3mdb)
+
 ## Owner Dashboard
 
 ![Owner dashboard](Screenshots/sked_OwnerDashboard.png)
