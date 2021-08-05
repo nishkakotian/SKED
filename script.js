@@ -227,7 +227,7 @@ function displayVenue(displayArea, venue) {
 
     venuediv.innerHTML =
         `<div class='card' id='${objId}' onclick='venueDetails(this)' style ='border-bottom: 4px solid ${colours[i]};'>
-            <img class='card-img-top' height='230px' src='${photo}'>
+            <img class='card-img-top' height='230px' width="25%" src='${photo}'>
             <div class='card-body'>
                 <h5 class='card-title'>${venue.get("venueName")}</h5>
                 <span class='tag tag-place'><small class="capitalised">${venue.get("city")}</small></span>
@@ -329,6 +329,12 @@ function displayBooking(displayArea, booking, isOwner) {
 
 function getOwnerData() {
     const user = Parse.User.current();
+
+    //allow only logged in users & only those with owner type 
+    if (!user || user.attributes.userType != "Owner") {
+        location.href = "home.html";
+    }
+
     document.getElementById("ownername").innerHTML = user.attributes.username;
 
     const Venues = Parse.Object.extend("Venues");
@@ -456,6 +462,13 @@ function createVenue() {
 };
 
 function showVenues() {
+
+    const user = Parse.User.current();
+    //allow only users who are logged in and their account is of customer type 
+    if (!user || user.attributes.userType != "Customer") {
+        location.href = "home_customer.html";
+    }
+
     const Venues = Parse.Object.extend("Venues");
     const query = new Parse.Query(Venues);
     query.limit(25);
@@ -643,7 +656,7 @@ function getCustomerBookings() {
     });
 }
 
-function showBookings(el) {
+function showOther(el) {
     if (el.innerHTML == "Show Venues") {
         el.innerHTML = "Show Bookings";
         document.getElementById("customerBookings").classList.add("d-none");
@@ -654,7 +667,6 @@ function showBookings(el) {
         document.getElementById("venues").style.display = "none";
         document.getElementById("customerBookings").classList.remove("d-none");
     }
-
 }
 
 document.getElementById("locationfilter").addEventListener("keydown", function (event) {
