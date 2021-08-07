@@ -19,6 +19,8 @@ Demo video : https://youtu.be/CUpRyOhE7kM
 
 Tutorial to build this project can be found here - [Part-1](https://dev.to/nishkakotian/building-a-venue-booking-system-using-parse-and-sashido-part-1-569k), [part-2](https://dev.to/nishkakotian/building-a-venue-booking-system-using-parse-and-sashido-part-2-3mdb)
 
+I've added a few demo images below.Check the Screenshots folder for more!
+
 ## Owner Dashboard
 
 ![Owner dashboard](Screenshots/sked_OwnerDashboard.png)
@@ -35,4 +37,3 @@ Tutorial to build this project can be found here - [Part-1](https://dev.to/nishk
 <img src="Screenshots/sked_VenueDetailsPage.gif" alt="Venue details for Spark studio">
 </p>
 
-Check out the Screenshots folder for demo images for other features.
