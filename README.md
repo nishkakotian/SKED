@@ -21,11 +21,17 @@ Tutorial to build this project can be found here - [Part-1](https://dev.to/nishk
 
 I've added a few demo images below.Check the Screenshots folder for more!
 
+## Home Page (Owner)
+![Home page owners](Screenshots/sked_homepgForOwners.png)
+
 ## Owner Dashboard
 
 ![Owner dashboard](Screenshots/sked_OwnerDashboard.png)
 
 ![Pending requests](Screenshots/sked_newBookingReq.png)
+
+## Home Page (Customer)
+![home page xustomers](Screenshots/sked_homepgForCustomers.png)
 
 ## Customer Dashboard
 
